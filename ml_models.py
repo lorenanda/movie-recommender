@@ -1,17 +1,21 @@
 import random
 import pandas as pd
 from collections import defaultdict
-from nmf_train_model import user_rating
+from svd_train_model import user_rating
 import joblib
+from nmf import ratings_pivot
+import numpy as np
 
 # load the model from disk
-svd =joblib.load("svd_model.sav")
+
+svd = joblib.load("svd_model.sav")
+nmf = joblib.load("nmf.sav")
 
 
 def predict_new_user_input(algo, user_input, orig_data):
 
     new_user = pd.DataFrame(user_input, index=[random.randint(
-        10_000, 11_000)], columns=orig_data.columns)
+        1, 610)], columns=orig_data.columns)
 
     user_input = pd.DataFrame(new_user.unstack().reset_index())
     user_input.columns = ["movieId", "userId", "rating"]
@@ -20,7 +24,8 @@ def predict_new_user_input(algo, user_input, orig_data):
     for i in range(len(user_input)):
 
         pred1 = algo.predict(
-            uid=user_input["userId"].iloc[i], iid=user_input["movieId"].iloc[i])
+            uid=user_input["userId"].iloc[i], iid=user_input["movieId"].iloc[i],
+            r_ui=user_input["rating"].iloc[i])
 
         pred.append(pred1)
     return pred
@@ -40,7 +45,7 @@ def recommand_n(predictions, n=10):
 
     recommendation = []
     cols = ["userId", "movieId"]
-    recommendations= pd.DataFrame(columns=cols)
+    recommendations = pd.DataFrame(columns=cols)
     for uid, user_ratings in top_n.items():
         recommendation = [iid for (iid, _) in user_ratings]
         for rec in recommendation:
@@ -51,8 +56,23 @@ def recommand_n(predictions, n=10):
     return recommendations
 
 
+def nmf_recommand(model, new_user, n):
+    userid = random.randint(1, 610)
+    new_user_input = pd.DataFrame(
+        new_user, index=[userid], columns=ratings_pivot.columns)
+    new_user_input.fillna(3, inplace=True)
+    P_new_user = model.transform(new_user_input)
+    user_pred = pd.DataFrame(np.dot(P_new_user, model.components_), columns=ratings_pivot.columns,
+                             index=[new_user_input.index.unique()])
+    user_pred.drop(columns=new_user.keys(), inplace=True)
+    user_pred.T.sort_values(
+        by=userid, ascending=False, axis=1, inplace=True)
+    return user_pred.T[:n]
+
+
 if __name__ == "__main__":
-    new_user_input = {1: 3, 50: 4}
+    new_user_input = {1: 3, 50: 5}
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
-    recommand_n(pred, 10)
+    print(recommand_n(pred, 10))
+    print(nmf_recommand(model=nmf, new_user=new_user_input, n=5))
