@@ -3,21 +3,12 @@ This is the code for the ML model
 that makes recommendatins based on movie ratings.
 """
 
+import pandas as pd
 import random
 from sklearn.decomposition import NMF
 
-movies = [
-          "The Shawshank Redemption",
-          "Star Wars: Episode IV - A New Hope",
-          "Pulp Fiction",
-          "The Dark Knight",
-          "Forrest Gump",
-          "Inception",
-          "The Matrix",
-          "Saving Private Ryan",
-          "Casablanca",
-          "The Lion King"
-]
+movies_df = pd.read_csv('./data/movies.csv')
+movies = movies_df['title']
 
 def get_recommendations():
     random.shuffle(movies)
