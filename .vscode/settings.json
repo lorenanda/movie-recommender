@@ -1,5 +1,11 @@
 {
     "python.pythonPath": "/home/lorena/anaconda3/bin/python",
     "python.linting.pylintEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    }
 }
