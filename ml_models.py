@@ -1,12 +1,15 @@
 import random
 import pandas as pd
 from collections import defaultdict
-from nmf_train_model import user_rating
+from svd_train_model import user_rating
 import joblib
+from nmf import ratings_pivot
+import numpy as np
 
 # load the model from disk
 
 svd = joblib.load("svd_model.sav")
+nmf = joblib.load("nmf.sav")
 
 
 def predict_new_user_input(algo, user_input, orig_data):
@@ -53,8 +56,23 @@ def recommand_n(predictions, n=10):
     return recommendations
 
 
+def nmf_recommand(model, new_user, n):
+    userid = random.randint(1, 610)
+    new_user_input = pd.DataFrame(
+        new_user, index=[userid], columns=ratings_pivot.columns)
+    new_user_input.fillna(3, inplace=True)
+    P_new_user = model.transform(new_user_input)
+    user_pred = pd.DataFrame(np.dot(P_new_user, model.components_), columns=ratings_pivot.columns,
+                             index=[new_user_input.index.unique()])
+    user_pred.drop(columns=new_user.keys(), inplace=True)
+    user_pred.T.sort_values(
+        by=userid, ascending=False, axis=1, inplace=True)
+    return user_pred.T[:n]
+
+
 if __name__ == "__main__":
-    new_user_input = {20: 3, 50: 5}
+    new_user_input = {1: 3, 50: 5}
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
     print(recommand_n(pred, 10))
+    print(nmf_recommand(model=nmf, new_user=new_user_input, n=5))
