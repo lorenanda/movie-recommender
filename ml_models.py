@@ -5,13 +5,13 @@ from nmf_train_model import user_rating
 import joblib
 
 # load the model from disk
-svd = loaded_model = joblib.load("svd_model.sav")
+svd = joblib.load("svd_model.sav")
 
 
 def predict_new_user_input(algo, user_input, orig_data):
 
     new_user = pd.DataFrame(user_input, index=[random.randint(
-        10_000, 11_000)], columns=orig_data.columns)
+        1, 610)], columns=orig_data.columns)
 
     user_input = pd.DataFrame(new_user.unstack().reset_index())
     user_input.columns = ["movieId", "userId", "rating"]
@@ -20,7 +20,8 @@ def predict_new_user_input(algo, user_input, orig_data):
     for i in range(len(user_input)):
 
         pred1 = algo.predict(
-            uid=user_input["userId"].iloc[i], iid=user_input["movieId"].iloc[i])
+            uid=user_input["userId"].iloc[i], iid=user_input["movieId"].iloc[i],
+            r_ui=user_input["rating"].iloc[i])
 
         pred.append(pred1)
     return pred
@@ -52,7 +53,7 @@ def recommand_n(predictions, n=10):
 
 
 if __name__ == "__main__":
-    new_user_input = {1: 3, 50: 4}
+    new_user_input = {20: 3, 50: 5}
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
-    recommand_n(pred, 10)
+    print(recommand_n(pred, 10))
