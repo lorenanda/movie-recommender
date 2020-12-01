@@ -4,6 +4,7 @@ that makes recommendatins based on movie ratings.
 """
 
 import random
+from sklearn.decomposition import NMF
 
 movies = [
           "The Shawshank Redemption",
@@ -29,13 +30,14 @@ def nmf_recommender():
     ratings = pd.read_csv('./data/ratings.csv')
     ratings_pivot = ratings.pivot(index='userId', columns='movieId', values='rating')
     ratings_pivot.replace(np.nan, 0, inplace=True)
-    
+    #convert ratings to dense?
+
     model = NMF(n_components=2, init='random', random_state=10)
     model.fit(ratings_pivot)
 
-    Q = model.components_  
     P = model.transform(ratings_pivot) 
+    Q = model.components_.T
 
-    nR = np.dot(P, Q)
-    
+    ratings_pred = Q.dot(P.T)
+    return ratings_pred.round(2)
     """
