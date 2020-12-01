@@ -1,0 +1,22 @@
+I. NMF + other models
+    1. finalize prediction function
+    2. write top_n recommadations
+    3. merge recomandation movieId with movie title
+    4. add recommandation genrations for all other models
+
+II. Flask
+    1.integrate code form course into our application
+        1.1 Add a form
+        1.2 Add a button
+    2.Recommendations
+        2.1 pre-chose 2 genres
+        2.2 radomly display 5 movie from 2 genres
+        2.3 add button with I havent seen this movies
+        2.4 repeat until user has seen at least 3 movie
+        ?2.1 parsing user input (matching expressions fuzzy ?)
+        2.5 preapre user input for recommandation function
+
+    3. Make website pretty
+        3.1 make a slider for ratings?
+        3.2 Imagies and links to trailer (href --> youtube)
+        3.3 TMDB API --> get poster, description ...???

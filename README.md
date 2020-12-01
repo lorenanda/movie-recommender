@@ -16,4 +16,4 @@ Tasks:
 - display the images on the result page
   - use the provided imdb id from the movielens data to query the API
   - to request information on Titanic, use the following link: http://www.omdbapi.com/?i=tt0120338&apikey=your-key
-- beautify the web (with css)
+

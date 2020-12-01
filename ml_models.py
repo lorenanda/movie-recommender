@@ -5,6 +5,7 @@ from nmf_train_model import user_rating
 import joblib
 
 # load the model from disk
+
 svd = joblib.load("svd_model.sav")
 
 
@@ -39,17 +40,17 @@ def recommand_n(predictions, n=10):
         user_ratings.sort(key=lambda x: x[1], reverse=True)
         top_n[uid] = user_ratings[:n]
 
-    recomendacion = []
-    columnas = ["userId", "movieId"]
-    recomendaciones = pd.DataFrame(columns=columnas)
+    recommendation = []
+    cols = ["userId", "movieId"]
+    recommendations = pd.DataFrame(columns=cols)
     for uid, user_ratings in top_n.items():
-        recomendacion = [iid for (iid, _) in user_ratings]
-        for rec in recomendacion:
-            agregar = {'userId': uid, 'movieId': rec}
-            recomendaciones = recomendaciones.append(
-                agregar, ignore_index=True)
+        recommendation = [iid for (iid, _) in user_ratings]
+        for rec in recommendation:
+            agg = {'userId': uid, 'movieId': rec}
+            recommendations = recommendations.append(
+                agg, ignore_index=True)
 
-    return recomendaciones
+    return recommendations
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ from surprise.model_selection import KFold
 import joblib
 
 user_rating_matrix = pd.read_csv(
-    "./data/ml-latest-small/ratings.csv", parse_dates=True)
+    "./data/ratings.csv", parse_dates=True)
 
 
 R = user_rating_matrix[["userId", "movieId", "rating"]]
@@ -33,13 +33,13 @@ if '__name__' == '__main__':
     # test and fill in the missing ratings
     testset = R_surpise.build_anti_testset()
     predictions = svd.test(testset)
-
+    print(predictions)
     # score model
-    accuracy.rmse(predictions)
+    print(accuracy.rmse(predictions))
     # 0.7426613175948654
-    accuracy.mse(predictions)
+    print(accuracy.mse(predictions))
     # 0.5515458326517415
 
     # save model
-    filename = 'svd_model.sav'
-    joblib.dump(svd, filename)
+    # filename = 'svd_model.sav'
+    # joblib.dump(svd, filename)
