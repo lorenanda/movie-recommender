@@ -1,8 +1,8 @@
-from flask import render_template
+from flask import render_template, request
 from recommender import input_movies
 import joblib
 from nmf import ratings_pivot
-from ml_models import nmf_recommand, get_recommendations, user_rating
+from ml_models import nmf_recommand, get_recommendations
 from flask import Flask
 
 
@@ -21,6 +21,8 @@ def index():
 
 @app.route('/recommender')
 def recommender():
+    user_input = dict(request.args)
+    print(user_input)
     recs = input_movies()
     return render_template('recommendations.html', movies=recs)
 
