@@ -11,6 +11,14 @@ import numpy as np
 svd = joblib.load("svd_model.sav")
 nmf = joblib.load("nmf.sav")
 
+movies_df = pd.read_csv('./data/movies.csv')
+movies = movies_df['title']
+
+
+def get_recommendations():
+    random.shuffle(movies)
+    return movies[:3]
+
 
 def predict_new_user_input(algo, user_input, orig_data):
 
