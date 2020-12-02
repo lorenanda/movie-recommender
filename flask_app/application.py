@@ -1,6 +1,12 @@
 from flask import Flask
-from ml_models import nmf_recommand, get_recommendations
+from ml_models import nmf_recommand, get_recommendations, user_rating
 from flask import render_template
+from nmf import ratings_pivot
+import joblib
+
+
+svd = joblib.load("svd_model.sav")
+nmf = joblib.load("nmf.sav")
 
 app = Flask(__name__)
 
@@ -12,7 +18,7 @@ def index():
 
 @app.route('/recommender')
 def recommender():
-    recs = get_recommendations()
+
     return render_template('recommendations.html', movies=recs)
 
 
