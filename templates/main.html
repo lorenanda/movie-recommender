@@ -4,6 +4,20 @@
 <head>
   <meta charset="utf-8">
   <title>Movie Recommender System</title>
+
+  <style>
+    body {
+      background-color: linen;
+    }
+    
+    h1 {
+      color: maroon;
+      margin-left: 40px;
+      align-content: center;
+    }
+
+    </style>
+
 </head>
 
 <body>
@@ -11,16 +25,23 @@
   
   <form action="/recommender">
     <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
-    &#9972; Titanic:
+    
+    <label for="movie1">&#9972; Titanic:</label><br>
     <input type="text" name="movie1" placeholder="1 - 5"><br>
-    Terminator:
+
+    <label for="movie2">Terminator:</label><br>
     <input type="text" name="movie2" placeholder="1 - 5"><br>
-    Star Wars:
+
+    <label for="movie3">Star Wars:</label><br>
     <input type="text" name="movie3" placeholder="1 - 5"><br>
-    Breakfast at Tiffany's:
+
+    <label for="movie4">Breakfast at Tiffany's</label><br>
     <input type="text" name="movie4" placeholder="1 - 5"><br>
-    Toy Story:
+
+    <label for="movie5">The Ring:</label><br>
+    <a href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.moviepostershop.com%2Fthe-ring-movie-poster-2002-1020189818.jpg&imgrefurl=https%3A%2F%2Fwww.moviepostershop.com%2Fthe-ring-movie-poster-2002&tbnid=jhpyJm1XN4Sn7M&vet=12ahUKEwjfydGy8K7tAhWV7qQKHSyQAzQQMygAegUIARC_AQ..i&docid=chPH99QzBXdloM&w=520&h=788&q=the%20ring%20poster&client=ubuntu&ved=2ahUKEwjfydGy8K7tAhWV7qQKHSyQAzQQMygAegUIARC_AQ"
     <input type="range" min="1" max="5" value="1" class="slider" name="movie5"><br>
+
     <input type="submit">
   </form>
   
