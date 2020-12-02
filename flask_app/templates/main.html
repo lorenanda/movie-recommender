@@ -26,20 +26,12 @@
   <form action="/recommender">
     <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
     
-    <label for="movie1">&#9972; Titanic:</label><br>
-    <input type="text" name="movie1" placeholder="1 - 5"><br>
+    {% for m in movies%}
 
-    <label for="movie2">Terminator:</label><br>
-    <input type="text" name="movie2" placeholder="1 - 5"><br>
+    <label for="movie2">{{ m }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie2"><br>
 
-    <label for="movie3">Star Wars:</label><br>
-    <input type="text" name="movie3" placeholder="1 - 5"><br>
-
-    <label for="movie4">Breakfast at Tiffany's</label><br>
-    <input type="text" name="movie4" placeholder="1 - 5"><br>
-
-    <label for="movie5">The Ring:</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie5"><br>
+    {% endfor %}
 
     <input type="submit">
   </form>

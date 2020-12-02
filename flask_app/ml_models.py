@@ -8,7 +8,7 @@ import numpy as np
 
 # load the model from disk
 
-svd = joblib.load("flask_app/svd_model.sav")
+svd = joblib.load("svd_model.sav")
 nmf = joblib.load("nmf.sav")
 
 
