@@ -2,7 +2,9 @@ I. NMF + other models
     1. finalize prediction function
     2. write top_n recommadations
     3. merge recomandation movieId with movie title
+    --> we have all 3 dfs in merged_data.csv . Should we use this?
     4. add recommandation genrations for all other models
+    ? fillna with 0 instead of 3 in ml_models->nmf_recommand()
 
 II. Flask
     1.integrate code form course into our application
@@ -17,6 +19,8 @@ II. Flask
         2.5 preapre user input for recommandation function
 
     3. Make website pretty
+        3.0 draft a design of the page 
         3.1 make a slider for ratings?
-        3.2 Imagies and links to trailer (href --> youtube)
+        --> done for 1 movie as example, with the same interval rating 1-5
+        3.2 Images and links to trailer (href --> youtube)
         3.3 TMDB API --> get poster, description ...???
