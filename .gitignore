@@ -2,11 +2,13 @@
 __pycache__/
 *.py[cod]
 *$py.class
-.vscode
+.vscode/
 config.py
-
+./flask_app/data
 # C extensions
 *.so
+
+*csv
 
 ###exclude data
 .flask_app/data

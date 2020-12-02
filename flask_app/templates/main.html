@@ -4,42 +4,23 @@
 <head>
   <meta charset="utf-8">
   <title>Movie Recommender System</title>
-
-  <style>
-    body {
-      
-      background-color: lightcyan;
-    }
-    
-    h1 {
-      color: rgb(0, 4, 53);
-      margin-left: 40px;
-      align-content: center;
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      font-weight: bold;
-    }
-
-    p {
-      font-family: cursive;
-    }
-
-    </style>
-
 </head>
 
 <body>
   <h1>{{ title }}</h1>
   
   <form action="/recommender">
-    <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
-    
-    {% for m in movies%}
-
-    <label for="movie2">{{ m }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie2"><br>
-
-    {% endfor %}
-  
+    <p>Please rate the following movies on a scale from 0.0 to 5.0:</p>
+    Movie 1:
+    <input type="text" name="movie1" placeholder="0.0 - 5.0"><br>
+    Movie 2:
+    <input type="text" name="movie2" placeholder="0.0 - 5.0"><br>
+    Movie 3:
+    <input type="text" name="movie3" placeholder="0.0 - 5.0"><br>
+    Movie 4:
+    <input type="text" name="movie4" placeholder="0.0 - 5.0"><br>
+    Movie 5:
+    <input type="text" name="movie5" placeholder="0.0 - 5.0"><br>
     <input type="submit">
   </form>
   

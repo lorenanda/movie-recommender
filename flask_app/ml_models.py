@@ -75,8 +75,5 @@ if __name__ == "__main__":
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
     print(recommand_n(pred, 10))
-<<<<<<< HEAD:ml_models.py
+
     print(nmf_recommand(model=nmf, new_user=new_user_input, n=5))
-=======
-    print(nmf_recommand(model=nmf, new_user=new_user_input, n=5))
->>>>>>> 9d3a8d91c1bd6dfdb7881ca2a93e39fdc84c1cd5:flask_app/ml_models.py
