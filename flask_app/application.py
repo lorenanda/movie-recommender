@@ -1,5 +1,5 @@
 from flask import Flask 
-from recommender import get_recommendations
+from recommender import input_movies
 from flask import render_template
 
 app = Flask(__name__)

@@ -13,7 +13,7 @@ model=joblib.load("nmf.sav")
 movies_df = pd.read_csv('./data/movies.csv')
 movies = movies_df['title']
 
-def get_recommendations():
+def input_movies():
     random.shuffle(movies)
     return movies[:3]
 
