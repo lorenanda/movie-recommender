@@ -10,7 +10,7 @@ import joblib
 
 model=joblib.load("nmf.sav")
 
-movies_df = pd.read_csv('./data/movies.csv')
+movies_df = pd.read_csv('flask_app/data/movies.csv')
 movies = movies_df['title']
 
 def get_recommendations():

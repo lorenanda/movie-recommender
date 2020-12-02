@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('main.html', title='Hello, World!')
+    return render_template('main.html', title='Movie Recommender')
 
 @app.route('/recommender')
 def recommender():

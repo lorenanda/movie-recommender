@@ -9,7 +9,7 @@ from surprise.model_selection import KFold
 import joblib
 
 user_rating_matrix = pd.read_csv(
-    "./data/ratings.csv", parse_dates=True)
+    "flask_app/data/ratings.csv", parse_dates=True)
 
 
 R = user_rating_matrix[["userId", "movieId", "rating"]]
