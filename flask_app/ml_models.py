@@ -81,10 +81,10 @@ def recommand_n(predictions, n=10, rating=False):
 # NMF
 
 
-def nmf_recommand(model, new_user, n):
+def nmf_recommand(model, new_user, n, orig_data):
     userid = random.randint(1, 610)
     new_user_input = pd.DataFrame(
-        new_user, index=[userid], columns=ratings_pivot.columns)
+        new_user, index=[userid], columns=orig_data.columns)
     new_user_input.fillna(3, inplace=True)
     P_new_user = model.transform(new_user_input)
     user_pred = pd.DataFrame(np.dot(P_new_user, model.components_), columns=ratings_pivot.columns,
@@ -141,7 +141,8 @@ if __name__ == "__main__":
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
     print(recommand_n(pred, 5, True))
-    print(nmf_recommand(model=nmf, new_user=new_user_input, n=4))
+    print(nmf_recommand(model=nmf, new_user=new_user_input,
+                        n=4, orig_data=ratings_pivot))
     sim_matrix = calculate_similarity_matrix(
         new_user_input, df=user_rating.fillna(user_rating.mean().mean()))
     rec_for_sim_users = recomandations_similar_users(sim_matrix, user_rating)
