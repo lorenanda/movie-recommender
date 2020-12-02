@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Recommendations</title>
+</head>
+
+<body>
+
+  <h2> You might like these movies:</h2>
+  <ul>
+    {% for m in movies%}
+    <li>{{ m }}</li>
+    {% endfor %}
+  </ul>
+
+  <br>
+  <a href="/">Go back to the main page</a>
+
+</body>
+
+</html>
