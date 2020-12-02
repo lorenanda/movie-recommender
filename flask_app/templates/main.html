@@ -7,13 +7,20 @@
 
   <style>
     body {
-      background-color: linen;
+      
+      background-color: lightcyan;
     }
     
     h1 {
-      color: maroon;
+      color: rgb(0, 4, 53);
       margin-left: 40px;
       align-content: center;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: bold;
+    }
+
+    p {
+      font-family: cursive;
     }
 
     </style>
@@ -26,22 +33,13 @@
   <form action="/recommender">
     <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
     
-    <label for="movie1">&#9972; Titanic:</label><br>
-    <input type="text" name="movie1" placeholder="1 - 5"><br>
+    {% for m in movies%}
 
-    <label for="movie2">Terminator:</label><br>
-    <input type="text" name="movie2" placeholder="1 - 5"><br>
+    <label for="movie2">{{ m }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie2"><br>
 
-    <label for="movie3">Star Wars:</label><br>
-    <input type="text" name="movie3" placeholder="1 - 5"><br>
-
-    <label for="movie4">Breakfast at Tiffany's</label><br>
-    <input type="text" name="movie4" placeholder="1 - 5"><br>
-
-    <label for="movie5">The Ring:</label><br>
-    <a href="https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.moviepostershop.com%2Fthe-ring-movie-poster-2002-1020189818.jpg&imgrefurl=https%3A%2F%2Fwww.moviepostershop.com%2Fthe-ring-movie-poster-2002&tbnid=jhpyJm1XN4Sn7M&vet=12ahUKEwjfydGy8K7tAhWV7qQKHSyQAzQQMygAegUIARC_AQ..i&docid=chPH99QzBXdloM&w=520&h=788&q=the%20ring%20poster&client=ubuntu&ved=2ahUKEwjfydGy8K7tAhWV7qQKHSyQAzQQMygAegUIARC_AQ"
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie5"><br>
-
+    {% endfor %}
+  
     <input type="submit">
   </form>
   

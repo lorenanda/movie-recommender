@@ -9,7 +9,7 @@ config.py
 *.so
 
 ###exclude data
-./data
+.flask_app/data
 
 # Distribution / packaging
 .Python
