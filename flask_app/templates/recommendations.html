@@ -3,20 +3,23 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Recommendations</title>
+  <title>Recommendations!</title>
 </head>
 
 <body>
 
-  <h2> You might like these movies:</h2>
+  <h1> Recommendations:</h1>
+  <h2> Here are your recommended movies:</h2>
   <ul>
+
     {% for m in movies%}
     <li>{{ m }}</li>
     {% endfor %}
-  </ul>
 
-  <br>
-  <a href="/">Go back to the main page</a>
+    <ul>
+      <p>
+        <a href="/">Go back to main page</a>
+      </p>
 
 </body>
 
