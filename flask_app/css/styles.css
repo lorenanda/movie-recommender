@@ -1,0 +1,12 @@
+* {
+  background-color: darkslategray;
+  color: rgb(0, 4, 53);
+  margin-left: 40px;
+  align-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+  color: darkblue;
+  font-weight: bold;
+}
