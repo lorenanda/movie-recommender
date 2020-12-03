@@ -1,12 +1,51 @@
-* {
-  background-color: darkslategray;
+body {
+  background-color: rgb(16, 231, 231);
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  max-width: 1200px;
+  width: calc(100% - 1rem);
+  background-color: #fff;
+  padding: 3rem;
+  text-align: center;
+}
+
+main > * {
+  margin-bottom: 3rem;
+}
+
+.wrapper {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr 200px 1fr;
+  grid-template-columns: 1fr;
+  display: grid;
+  gap: 1rem;
+}
+
+.card label {
+  background-color: coral;
+  width: 250px;
+}
+
+h1 {
   color: rgb(0, 4, 53);
   margin-left: 40px;
   align-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  margin-top: 0;
 }
 
-h1 {
-  color: darkblue;
-  font-weight: bold;
+p {
+  font-family: cursive;
 }

@@ -1,63 +1,159 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../css/styles.css"
+      media="screen"
+    />
+    <title>Movie Recommender System</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>Movie Recommender System</title>
+  <body>
+    <main>
+      <h1>{{ title }}</h1>
 
-  <link rel="stylesheet" href="../css/styles.css"> 
+      <p>
+        Please rate the following movies on a scale from 1 (worst) to 5 (best):
+      </p>
 
-</head>
+      <form action="/recommender">
+        <div class="wrapper">
+          <div class="card">
 
-<body>
-  <h1>{{ title }}</h1>
-  
-  <form action="/recommender">
-    <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
-    
-    {{ movie0 }}
-    <label for="movie0">{{ movie0 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie0"><br>
+            <label for="movie0">{{ movie0 }}</label>
+            <br>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie0"
+            />
+          </div>
 
-    {{ movie1 }}
-    <label for="movie1">{{ movie1 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie1"><br>
+          <div class="card">
+            <label for="movie1">{{ movie1 }}</label>
+            <br>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie1"
+            />
+          </div>
 
-    {{ movie2 }}
-    <label for="movie2">{{ movie2 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie2"><br>
+          <div class="card">
+            <label for="movie2">{{ movie2 }}</label>
+            <br>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie2"
+            />
+          </div>
 
-    {{ movie3 }}
-    <label for="movie3">{{ movie3 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie3"><br>
+          <div class="card">
+            <label for="movie3">{{ movie3 }}</label>
+            <br>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie3"
+            />
+          </div>
 
-    {{ movie4 }}
-    <label for="movie4">{{ movie4 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie4"><br>
+          <div class="card">
+            <label for="movie4">{{ movie4 }}</label>
+            <br>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie4"
+            />
+          </div>
 
-    {{ movie5 }}
-    <label for="movie5">{{ movie5 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie5"><br>
+          <div class="card">
+            <br>>
+            <label for="movie5">{{ movie5 }}</label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie5"
+            />
+          </div>
 
-    {{ movie6 }}
-    <label for="movie6">{{ movie6 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie6"><br>
+          <div class="card">
+            <br>
+            <label for="movie6">{{ movie6 }}</label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie6"
+            />
+          </div>
 
-    {{ movie7 }}
-    <label for="movie7">{{ movie7 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie7"><br>
+          <div class="card">
+            <br>
+            <label for="movie7">{{ movie7 }}</label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie7"
+            />
+          </div>
 
-    {{ movie8 }}
-    <label for="movie8">{{ movie8 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie8"><br>
-    
-    {{ movie9 }}
-    <label for="movie9">{{ movie9 }}</label><br>
-    <input type="range" min="1" max="5" value="1" class="slider" name="movie9"><br>
-    
-    <input type="submit">
-  </form>
-  
-</body>
+          <div class="card">
+            <br>
+            <label for="movie8">{{ movie8 }}</label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie8"
+            />
+          </div>
 
+          <div class="card">
+            <br>
+            <label for="movie9">{{ movie9 }}</label>
+            <input
+              type="range"
+              min="1"
+              max="5"
+              value="1"
+              class="slider"
+              name="movie9"
+            />
+          </div>
+        </div>
+        <input type="submit" />
+      </form>
+    </main>
+  </body>
 </html>

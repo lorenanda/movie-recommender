@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="../stylesheet/styles.css"
+      media="screen"
+    />
+    <title>Recommendations</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>Recommendations</title>
-</head>
+  <body>
+    <main>
+      <h1>You might like these movies:</h1>
+      <ul class="wrapper">
+        {% for m in movies%}
+        <li class="card">{{ m }}</li>
+        {% endfor %}
+      </ul>
 
-<body>
-
-  <h2> You might like these movies:</h2>
-  <ul>
-    {% for m in movies%}
-    <li>{{ m }}</li>
-    {% endfor %}
-  </ul>
-
-  <br>
-  <a href="/">Go back to the main page</a>
-
-</body>
-
+      <br />
+      <a href="/">Go back to the main page</a>
+    </main>
+  </body>
 </html>
