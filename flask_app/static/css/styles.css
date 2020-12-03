@@ -1,5 +1,5 @@
 body {
-  background-image: linear-gradient(to top, #9bfffb, #8bfff9, #79fff7, #65fef4, #4dfef1, #23ecf3, #00d9f1, #00c6ec, #009ad9, #006ebd, #2a3f96, #400162);
+  background-image: linear-gradient(to bottom, #051937, #52325c, #9d4e6e, #db776e, #ffb26b);
   display: flex;
   justify-content: center;
 }
@@ -33,7 +33,7 @@ main > * {
 }
 
 .card label {
-  background-color: coral;
+  background-color: #ccc;
   width: 250px;
 }
 
