@@ -27,15 +27,16 @@ main > * {
   padding: 1rem;
   border: 1px solid #ccc;
   grid-auto-flow: column;
-  grid-template-rows: 1fr 200px 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-columns: 1fr;
   display: grid;
   gap: 1rem;
 }
 
-.card label {
+img {
   background-color: #ccc;
-  width: 250px;
+  width: 100%;
+  height: auto;
 }
 
 h1 {
@@ -60,6 +61,7 @@ input[type=submit] {
   padding: 10px 10px;
   border-radius: 10px;
   border: 2px solid  #002359;
+  margin-top: 1rem;
 }
 
 input[type=submit]:hover {
