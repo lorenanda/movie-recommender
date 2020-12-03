@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
+<head>
     <meta charset="utf-8" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="static/css/styles.css"
-      media="screen"
-    />
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
     <title>Recommendations</title>
-  </head>
+</head>
 
-  <body>
+<body>
     <main>
-      <h1>You might like these movies:</h1>
-      <ul class="wrapper">
-        <li class="card">Parasite</li>
-        <li class="card">Joker</li>
-      </ul>
-      <br />
+        <h1>You might like these movies:</h1>
+        <ul class="wrapper">
+            <li class="card">{{ movies[0] }}</li>
+            <li class="card">{{ movies[1] }}</li>
+            <li class="card">{{ movies[2] }}</li>
+            <li class="card">{{ movies[3] }}</li>
+            <li class="card">{{ movies[4] }}</li>
+            <li class="card">{{ movies[5] }}</li>
+        </ul>
+        <br />
 
-      <form action="/">
-        <input type="submit" value="Return to main page"/>
-      </form>
+        <form action="/">
+            <input type="submit" value="Return to main page" />
+        </form>
     </main>
-  </body>
+</body>
+
 </html>
