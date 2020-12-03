@@ -1,13 +1,14 @@
 body {
-  background-image: linear-gradient(to bottom, #051937, #52325c, #9d4e6e, #db776e, #ffb26b);
+  /*background-image: linear-gradient(to top, #527e92, #698fa6, #80a1bb, #98b3cf, #b1c5e3, #c1d0ec, #d1dbf4, #e0e6fd, #e9ecfd, #f1f2fe, #f7f6fe, #ffffff);*/
+  background-image: radial-gradient(circle, #f4f4f9, #dde5f5, #bdd8f0, #96cde6, #69c2d6, #51b1c6, #34a0b7, #008fa8, #007499, #005888, #003d72, #002359);
   display: flex;
   justify-content: center;
 }
 
 main {
-  max-width: 1200px;
+  max-width: 1500px;
   width: calc(100% - 1rem);
-  background-color: #fff;
+  background-color: whitesmoke;
   padding: 3rem;
   text-align: center;
 }
@@ -39,30 +40,30 @@ main > * {
 
 h1 {
   color: rgb(0, 0, 0);
-  margin-left: 40px;
   align-content: center;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
-  margin-top: 0;
+  font-size: 40px;
 }
 
 p {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 input[type=submit] {
-  background-color:  #051937;
-  color: #ffb26b;
+  background-color: #bdd8f0;
+  color: #002359;
   font-size: 25px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
   padding: 10px 10px;
   border-radius: 10px;
-  border: 2px solid #ffb26b;
+  border: 2px solid  #002359;
 }
 
 input[type=submit]:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  border: 2px solid #051937;
-  background-color: #ffb26b;
-  color:  #051937;
+  border: 2px solid #bdd8f0;
+  background-color: #002359;
+  color: #bdd8f0;
 }
