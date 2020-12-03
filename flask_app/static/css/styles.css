@@ -50,6 +50,7 @@ p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/* buttons */
 input[type=submit] {
   background-color: #bdd8f0;
   color: #002359;
@@ -66,4 +67,15 @@ input[type=submit]:hover {
   border: 2px solid #bdd8f0;
   background-color: #002359;
   color: #bdd8f0;
+}
+
+/* navigation bar */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: inline;
 }
