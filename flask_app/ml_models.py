@@ -8,11 +8,12 @@ Comprises all ML_models for recomandation systems:
 import random
 import pandas as pd
 from collections import defaultdict
-from svd_train_model import user_rating
-import joblib
-from nmf import ratings_pivot
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
+import joblib
+
+from svd_train_model import user_rating
+from nmf import ratings_pivot
 
 # load the model from disk
 
@@ -69,7 +70,7 @@ def recommand_n(predictions, n=10, rating=False):
         # Parameters###:
 
            -predictions= given by function predict_new_user_input (dictionary)
-           -n= number of items to recommand
+           -n= number of items to recommand (int)
            -rating = default False, if True also the ratings of the movie will be outputed
 
         # Returns#####:
@@ -112,12 +113,12 @@ def nmf_recommand(model, new_user, n, orig_data):
     Recomander system based on NMF.
     # Parametrs#####:
         -model = NMF ML_models
-        - new_user = user input (in from from movie Id and ratings)
-        - n= number of recommandations
+        - new_user = user input (dict in from from movie Id and ratings)
+        - n= number of recommandations (int)
         - orig_data = original data (must not contain NANs)
 
     # Return#####:
-        - data frame containing movie Id recomandations and rating
+        - data frame containing movie Id recomandations 
 
     """
     userid = random.randint(1, 610)
@@ -130,7 +131,8 @@ def nmf_recommand(model, new_user, n, orig_data):
     user_pred.drop(columns=new_user.keys(), inplace=True)
     user_pred.sort_values(
         by=userid, ascending=False, axis=1, inplace=True)
-    return user_pred.T[:n]
+
+    return pd.DataFrame(user_pred.T[:n].reset_index(), columns=["movieId"])
 
 # collaborative filtering
 
@@ -181,12 +183,13 @@ def recomandations_similar_users(similar_users, orig_data):
     return final_recomand
 
 
-def collaborative_filtering(final_recomand):
+def collaborative_filtering(final_recomand, n):
     """Selects the most relevant movies for a new user, basde on his similarity with other users.
     # Parameters###:
         - final_recomand: output of function recomandations_similar_users
+        - n: number of movies to be recomanded
     # Returns###:
-        - data frame containing top movie recomandation for new user
+        - pandas data frame containing top movie recomandation (iids) for new user
     """
 
     final_recomand["rating_sim"] = final_recomand["rating_sim"].astype(float)
@@ -194,18 +197,24 @@ def collaborative_filtering(final_recomand):
         "movieId")[["rating_sim", "sim"]].sum().reset_index()
     recomand["most_similar"] = recomand["rating_sim"] / recomand["sim"]
 
-    return recomand[~recomand["movieId"].isin(list(new_user_input.keys()))].sort_values(
-        by="most_similar", ascending=False)["movieId"][:5]
+    user_recomand = recomand[~recomand["movieId"].isin(list(new_user_input.keys()))].sort_values(
+        by="most_similar", ascending=False)["movieId"][:n]
+    user_recomand = pd.DataFrame(
+        pd.Series(user_recomand, name="movieId"), columns=["movieId"])
+
+    user_recomand["movieId"] = user_recomand["movieId"].astype(int)
+
+    return user_recomand
 
 
 if __name__ == "__main__":
     new_user_input = {1: 3, 50: 5}
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
-    print(recommand_n(pred, 5, True))
+    print(recommand_n(pred, 5, False))
     print(nmf_recommand(model=nmf, new_user=new_user_input,
                         n=4, orig_data=ratings_pivot))
     sim_matrix = calculate_similarity_matrix(
         new_user_input, df=user_rating.fillna(user_rating.mean().mean()))
     rec_for_sim_users = recomandations_similar_users(sim_matrix, user_rating)
-    print(collaborative_filtering(rec_for_sim_users))
+    print(collaborative_filtering(rec_for_sim_users, 5))
