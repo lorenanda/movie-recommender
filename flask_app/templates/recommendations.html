@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="static/css/styles.css"
+      media="screen"
+    />
+    <title>Recommendations</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <title>Recommendations!</title>
-</head>
+  <body>
+    <main>
+      <h1>You might like these movies:</h1>
+      <ul class="wrapper">
+        <li class="card">Parasite</li>
+        <li class="card">Joker</li>
+      </ul>
+      <br />
 
-<body>
-
-  <h1> Recommendations:</h1>
-  <h2> Here are your recommended movies:</h2>
-  <ul>
-
-    {% for m in movies%}
-    <li>{{ m }}</li>
-    {% endfor %}
-
-    <ul>
-      <p>
-        <a href="/">Go back to main page</a>
-      </p>
-
-</body>
-
+      <form action="/">
+        <input type="submit" value="Return to main page"/>
+      </form>
+    </main>
+  </body>
 </html>
