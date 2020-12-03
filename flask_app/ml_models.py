@@ -137,12 +137,13 @@ def nmf_recommand(model, new_user, n, orig_data):
 # collaborative filtering
 
 
-def calculate_similarity_matrix(new_user_input, df):
+def calculate_similarity_matrix(new_user_input, df, n_users=5):
     """Calculates similarity matrix using cosine similarity.
         This is a user similarity matrix.
         # Parameters####:
-            - new_user: newu user profiele (dict)
+            - new_user: new user profiele (dict)
             - df : data frame containing other users and ratings(most not contain NANS)
+            - n_users: how many similar users should be picked (int)
 
         # Returns#####:
             - data frame containing similar users (ids) and their similarity index
@@ -155,7 +156,7 @@ def calculate_similarity_matrix(new_user_input, df):
     sim_matrix = pd.DataFrame(cosine_similarity(df)).iloc[-1]
     sim_matrix.index = list(range(1, len(df)+1))
     sim_matrix.sort_values(ascending=False, inplace=True)
-    similar_users = sim_matrix[1:6]
+    similar_users = sim_matrix[1:(n_users+1)]
 
     return similar_users
 
@@ -183,7 +184,7 @@ def recomandations_similar_users(similar_users, orig_data):
     return final_recomand
 
 
-def collaborative_filtering(final_recomand, n):
+def collaborative_filtering(final_recomand, n, new_user_input):
     """Selects the most relevant movies for a new user, basde on his similarity with other users.
     # Parameters###:
         - final_recomand: output of function recomandations_similar_users
@@ -215,6 +216,7 @@ if __name__ == "__main__":
     print(nmf_recommand(model=nmf, new_user=new_user_input,
                         n=4, orig_data=ratings_pivot))
     sim_matrix = calculate_similarity_matrix(
-        new_user_input, df=user_rating.fillna(user_rating.mean().mean()))
+        new_user_input, df=user_rating.fillna(user_rating.mean().mean()), n_users=5)
     rec_for_sim_users = recomandations_similar_users(sim_matrix, user_rating)
-    print(collaborative_filtering(rec_for_sim_users, 5))
+    print(collaborative_filtering(
+        rec_for_sim_users, 5, new_user_input=new_user_input))
