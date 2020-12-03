@@ -47,5 +47,22 @@ h1 {
 }
 
 p {
-  font-family: cursive;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type=submit] {
+  background-color:  #051937;
+  color: #ffb26b;
+  font-size: 25px;
+  text-align: center;
+  padding: 10px 10px;
+  border-radius: 10px;
+  border: 2px solid #ffb26b;
+}
+
+input[type=submit]:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  border: 2px solid #051937;
+  background-color: #ffb26b;
+  color:  #051937;
 }
