@@ -27,7 +27,6 @@ def index():
         movie9=most_rated['title'][9]
         )
 
-
 @app.route('/recommender')
 def recommender():
     recs = input_movies()
