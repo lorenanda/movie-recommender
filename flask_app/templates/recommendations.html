@@ -5,7 +5,7 @@
     <link
       rel="stylesheet"
       type="text/css"
-      href="../stylesheet/styles.css"
+      href="static/css/styles.css"
       media="screen"
     />
     <title>Recommendations</title>
@@ -15,13 +15,14 @@
     <main>
       <h1>You might like these movies:</h1>
       <ul class="wrapper">
-        {% for m in movies%}
-        <li class="card">{{ m }}</li>
-        {% endfor %}
+        <li class="card">Parasite</li>
+        <li class="card">Joker</li>
       </ul>
-
       <br />
-      <a href="/">Go back to the main page</a>
+
+      <form action="/">
+        <input type="submit" value="Return to main page"/>
+      </form>
     </main>
   </body>
 </html>
