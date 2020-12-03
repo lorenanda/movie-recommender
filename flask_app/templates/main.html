@@ -26,19 +26,55 @@
 </head>
 
 <body>
-    <h1>{{ title }}</h1>
 
-    <form action="/recommender">
-        <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
+  <h1>{{ title }}</h1>
+  
+  <form action="/recommender">
+    <p>Please rate the following movies on a scale from 1 (worst) to 5 (best):</p>
+    
+    {{ movie0 }}
+    <label for="movie0">{{ movie0 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie0"><br>
 
-        {% for m in movies%}
+    {{ movie1 }}
+    <label for="movie1">{{ movie1 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie1"><br>
 
-        <label for="movie2">{{ m }}</label><br>
-        <input type="range" min="1" max="5" value="1" class="slider" name="movie2"><br> {% endfor %}
+    {{ movie2 }}
+    <label for="movie2">{{ movie2 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie2"><br>
 
-        <input type="submit">
-    </form>
+    {{ movie3 }}
+    <label for="movie3">{{ movie3 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie3"><br>
 
+    {{ movie4 }}
+    <label for="movie4">{{ movie4 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie4"><br>
+
+    {{ movie5 }}
+    <label for="movie5">{{ movie5 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie5"><br>
+
+    {{ movie6 }}
+    <label for="movie6">{{ movie6 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie6"><br>
+
+    {{ movie7 }}
+    <label for="movie7">{{ movie7 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie7"><br>
+
+    {{ movie8 }}
+    <label for="movie8">{{ movie8 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie8"><br>
+    
+    {{ movie9 }}
+    <label for="movie9">{{ movie9 }}</label><br>
+    <input type="range" min="1" max="5" value="1" class="slider" name="movie9"><br>
+    
+    <input type="submit">
+  </form>
+  
 </body>
 
 </html>
