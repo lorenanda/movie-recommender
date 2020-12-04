@@ -14,7 +14,6 @@ body {
 main {
   max-width: 1500px;
   width: calc(100% - 1rem);
-  background-color: whitesmoke;
   padding: 3rem;
   text-align: center;
 }
@@ -30,6 +29,7 @@ main > * {
 }
 
 .card {
+  background-color: white;
   padding: 1rem;
   border: 1px solid #ccc;
   grid-auto-flow: column;
@@ -37,6 +37,7 @@ main > * {
   grid-template-columns: 1fr;
   display: grid;
   gap: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 img {
@@ -48,18 +49,24 @@ img {
 h1 {
   color: rgb(0, 0, 0);
   align-content: center;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
   font-size: 40px;
 }
 
+h2 {
+  text-align: left;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
 }
 
 /* buttons */
 input[type=submit] {
-  background-color: #bdd8f0;
+  background-color: white;
   color: #002359;
   font-size: 25px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -72,9 +79,15 @@ input[type=submit] {
 
 input[type=submit]:hover {
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  border: 2px solid #bdd8f0;
+  border: 2px solid white;
   background-color: #002359;
-  color: #bdd8f0;
+  color: white;
+}
+
+input[type=radio] {
+  font: 25px;
+  text-align: left;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* navigation bar */
