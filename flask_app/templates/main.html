@@ -21,9 +21,10 @@
 
       <h1>{{ title }}</h1>
 
+      <h2>Step 1</h2>
       <p>
-        Here are some of the most popular movies.
-        Please rate as many as possible, so that we can make good recommendations.
+        Here are some of the most popular movies of all times!
+        Please rate as many as possible. If you haven't seen a movie, set the slider at the left end to 0.
       </p>
 
       <form action="/recommender">
@@ -178,6 +179,16 @@
           </div>
         </div>
         
+        <div>
+          <h2>Step 2</h2>
+
+          <input type="radio" id="old" name="preference" value="old">
+          <label for="old">Oldies but goldies!</label><br>
+          <input type="radio" id="new" name="preference" value="new">
+          <label for="new">The newer the better</label><br>
+          <input type="radio" id="any" name="preference" value="any">
+          <label for="any">I'd watch anything with a pizza</label> 
+        </div>
 
         <input type="submit" value="Recommend me new movies!"/>
       </form>
