@@ -1,10 +1,17 @@
 from flask import Flask, render_template, request
 import joblib
 import pandas as pd
+import tmdbv3api
+from tmdbv3api import TMDb, Movie
+import config
 
 from ml_models import svd, nmf, nmf_recommand, ratings_pivot, user_rating, calculate_similarity_matrix, recomandations_similar_users, collaborative_filtering
 from user_input_promt import input_movies, movies_df
+from get_TMDB_info import TMDBInfo
 
+tmdb = TMDb()
+tmdb.api_key = config.API_KEY
+link = pd.read_csv("./data/links.csv")
 
 app = Flask(__name__)
 
@@ -79,6 +86,24 @@ def recommender():
     # display only the titles
     rec = pd.merge(rec, movies_df, on='movieId')
     recs = rec["title"]
+
+    # get information from TMDB
+    rec_link = pd.merge(rec, link, on='movieId')
+    rec_link["tmdbId"] = rec_link["tmdbId"].astype(int)
+
+    movie_info = pd.DataFrame(columns=["title", "overview", "image_url", "popularity",
+                                       "release_date", "video_url"])
+    for i in rec_link["tmdbId"]:
+        t = TMDBInfo(movieId=i, api_key=tmdb.api_key, tmdb=TMDb())
+        overview, image_url, title, popularity, release_date = t.get_details()
+        t.get_movie_trailer()
+        video_url = t.get_video_url()
+
+        args = {"title": title, "overview": overview, "image_url": image_url, "popularity": popularity,
+                "release_date": release_date, "video_url": video_url}
+        movie_info = movie_info.append(args, ignore_index=True)
+
+    movie_info.set_index("title", inplace=True)
     return render_template('recommendations.html', movies=recs)
 
 
