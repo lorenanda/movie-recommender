@@ -10,15 +10,34 @@
 <body>
     <main>
         <h1>You might like these movies:</h1>
-        <ul class="wrapper">
+        <!-- <ul class="wrapper">
             <li class="card">{{ movies[0] }}</li>
             <li class="card">{{ movies[1] }}</li>
             <li class="card">{{ movies[2] }}</li>
             <li class="card">{{ movies[3] }}</li>
             <li class="card">{{ movies[4] }}</li>
 
-        </ul>
+        </ul> -->
         <br />
+
+        <div class="jumbotron">
+            {% for i in range(movie_info.shape[0])%}
+            <span>Movie Title: {{movie_info.title[i]}}</span></br>
+            </br>
+            <span>Overview: {{movie_info.overview[i]}}</span></br>
+            </br>
+            <!-- <span>Release date: {{movies.release_date}}</span></br> -->
+            <img src={{movie_info.image_url[i]}}></br>
+            <!-- <span>Rated: {{movies.Rated}}</span></br> -->
+            <span>Release date: {{movie_info.release_date[i]}}</span></br>
+            <span>Popularity: {{movie_info.popularity[i]}}</span></br>
+            </br>
+            <iframe width="420" height="345" src={{movie_info.video_url[i]}}>
+                </iframe></br>
+            </br>
+            {% endfor %}
+        </div>
+
 
         <form action="/">
             <input type="submit" value="Return to main page" />
