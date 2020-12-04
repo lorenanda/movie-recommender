@@ -96,10 +96,9 @@ def recommender():
     for i in rec_link["tmdbId"]:
         t = TMDBInfo(movieId=i, api_key=tmdb.api_key, tmdb=TMDb())
         overview, image_url, title, popularity, release_date = t.get_details()
-        print(overview, image_url, title, popularity, release_date)
         t.get_movie_trailer()
         video_url = t.get_video_url()
-        print(video_url)
+
         args = {"title": title, "overview": overview, "image_url": image_url, "popularity": popularity,
                 "release_date": release_date, "video_url": video_url}
         movie_info = movie_info.append(args, ignore_index=True)
