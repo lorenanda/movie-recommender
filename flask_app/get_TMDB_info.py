@@ -56,21 +56,24 @@ class TMDBInfo:
         self.site = site
 
     def get_video_url(self):
-        movie_site = self.site[0]
-        base_url = "https://www.youtube.com/watch?v="
-        base_url_vimeo = "https://vimeo.com/"
-        if movie_site != "YouTube":
-            base_url = base_url_vimeo
+        if len(self.site) > 0:
+            movie_site = self.site[0]
+            base_url = "https://www.youtube.com/embed/"
+            base_url_vimeo = "https://vimeo.com/"
+            if movie_site != "YouTube":
+                base_url = base_url_vimeo
 
-        trailer_url = "%s%s" % (
-            base_url,
-            str(self.key[0])
-        )
-        return trailer_url
+            trailer_url = "%s%s" % (
+                base_url,
+                str(self.key[0])
+            )
+            return trailer_url
+        else:
+            return []
 
 
 if __name__ == "__main__":
-    t = TMDBInfo(movieId=862, api_key=tmdb.api_key, tmdb=TMDb())
+    t = TMDBInfo(movieId=14280, api_key=tmdb.api_key, tmdb=TMDb())
     overview, image_url, title, popularity, release_date = t.get_details()
     print(overview)
     print(image_url)
