@@ -91,6 +91,7 @@ def recommender():
     rec_link = pd.merge(rec, link, on='movieId')
     rec_link["tmdbId"] = rec_link["tmdbId"].astype(int)
 
+    print(rec_link)
     movie_info = pd.DataFrame(columns=["title", "overview", "image_url", "popularity",
                                        "release_date", "video_url"])
     for i in rec_link["tmdbId"]:
@@ -103,8 +104,7 @@ def recommender():
                 "release_date": release_date, "video_url": video_url}
         movie_info = movie_info.append(args, ignore_index=True)
 
-    movie_info.set_index("title", inplace=True)
-    return render_template('recommendations.html', movies=recs)
+    return render_template('recommendations.html', movies=recs, movie_info=movie_info)
 
 
 if __name__ == "__main__":
