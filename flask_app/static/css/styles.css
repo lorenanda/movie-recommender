@@ -45,6 +45,7 @@ img {
   height: auto;
 }
 
+/* text */
 h1 {
   color: rgb(0, 0, 0);
   align-content: center;
@@ -53,8 +54,13 @@ h1 {
   font-size: 40px;
 }
 
+h2 {
+  text-align: left;
+}
+
 p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
 }
 
 /* buttons */
@@ -75,6 +81,13 @@ input[type=submit]:hover {
   border: 2px solid #bdd8f0;
   background-color: #002359;
   color: #bdd8f0;
+}
+
+input[type=radio] {
+  font-size: 25px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+
 }
 
 /* navigation bar */
