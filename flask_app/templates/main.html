@@ -16,8 +16,7 @@
         </ul> -->
 
         <h1>{{ title }}</h1>
-
-        <h3>Step 1: Here are some of the most popular movies of all times! Please rate as many as possible. If you haven't seen a movie, let the slider at 0.</h2>
+        <h2>Step 1: Here are some of the most popular movies of all times! Please rate as many as possible. If you haven't seen a movie, let the slider at 0.</h2>
 
         <form action="/recommender">
             <div class="wrapper">
@@ -101,8 +100,8 @@
                 </div>
             </div>
 
-            <div>
-                <h3>Step 2: What kind of movies do you prefer?</h2>
+            <div class="decades">
+                <h2>Step 2: What kind of movies do you prefer?</h2>
 
                 <input type="radio" id="old" name="preference" value="1">
                 <label for="old">Oldies but goldies!</label>
@@ -112,8 +111,11 @@
                 <label for="any">I'd watch anything with a pizza</label>
             </div>
 
-            <input type="submit" value="Recommend me new movies!" />
+            <input type="submit" onclick="this.value='Calculating...'" value="Recommend me new movies!" id="button1"/>
+
+            
         </form>
+
     </main>
 </body>
 

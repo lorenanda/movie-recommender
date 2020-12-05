@@ -55,10 +55,13 @@ main > * {
   display: grid;
 }
 
-/* .--horizontal .card img {
-  width: auto;
-  height: 100%;
-} */
+.decades {
+  align-content: initial;
+  text-align: left;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: larger;
+}
 
 img {
   background-color: #ccc;
@@ -74,7 +77,7 @@ h1 {
   font-size: 40px;
 }
 
-h3 {
+h2 {
   color: white;
   text-align: left;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -87,22 +90,22 @@ p {
 
 /* buttons */
 input[type=submit] {
-  background-color:  #454545;
-  color: #F8DD00;
+  background-color:  #F8DD00;
+  color: #454545;
   font-size: 25px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
   padding: 10px 10px;
   border-radius: 10px;
-  border: 2px solid  #F8DD00;
+  border: 2px solid  #454545;
   margin-top: 1rem;
 }
 
 input[type=submit]:hover {
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  border: 2px solid #454545;
-  background-color: #F8DD00;
-  color: #454545;
+  border: 2px solid #F8DD00;
+  background-color: #454545;
+  color: #F8DD00;
 }
 
 input[type=radio] {
