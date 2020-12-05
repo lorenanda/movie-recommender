@@ -22,7 +22,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Display the most rated movies to the user
-       and promt user to rate them: solves cold start problem 
+       and promt user to rate them: solves cold start problem
     """
     top10 = input_movies()
 
@@ -44,7 +44,7 @@ def index():
 
 @app.route('/recommender')
 def recommender():
-    """Intercept user input and make recomandations based on his 
+    """Intercept user input and make recomandations based on his
         initial rating
     """
     top10 = input_movies()
@@ -85,7 +85,7 @@ def recommender():
         sim_matrix = calculate_similarity_matrix(
             input_frame, df=user_rating.fillna(user_rating.mean().mean()), n_users=5)
         rec_for_sim_users = recomandations_similar_users(
-            sim_matrix, svd_r_hat, cols_above, cols_below, selection=int(selection))
+            sim_matrix, svd_r_hat, cols_above, cols_below, selection=2)
 
         rec = collaborative_filtering(
             rec_for_sim_users, 5, new_user_input=input_frame)
