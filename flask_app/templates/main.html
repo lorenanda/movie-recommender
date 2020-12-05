@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen"/>
+
     <title>Movie Recommender System</title>
 </head>
 
@@ -112,15 +112,10 @@
                 <label for="any">I'd watch anything with a pizza</label>
             </div>
 
-            <input type="submit" value="Recommend me new movies!" />
+            <input type="submit" onclick="this.value='Loading...'" value="Recommend me new movies!" id="button1"/>
+
+        </div>
         </form>
-
-        <!-- Add font awesome icons to buttons (note that the fa-spin class rotates the icon) -->
-        <button class="buttonload">
-        <i class="fa fa-spinner fa-spin"></i>Loading
-        </button>
-
     </main>
 </body>
-
 </html>
