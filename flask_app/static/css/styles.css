@@ -6,7 +6,8 @@
 */
 
 body {
-  background-image: radial-gradient(circle, #f4f4f9, #dde5f5, #bdd8f0, #96cde6, #69c2d6, #51b1c6, #34a0b7, #008fa8, #007499, #005888, #003d72, #002359);
+  /*background-image: radial-gradient(circle, #f4f4f9, #dde5f5, #bdd8f0, #96cde6, #69c2d6, #51b1c6, #34a0b7, #008fa8, #007499, #005888, #003d72, #002359);*/
+  background-image: radial-gradient(circle, #b5c2c2, #a1abad, #8e9498, #7c7e81, #69696b, #5d5d5e, #515151, #454545, #3d3d3d, #363636, #2e2e2e, #272727);
   display: flex;
   justify-content: center;
 }
@@ -66,14 +67,15 @@ img {
 }
 
 h1 {
-  color: rgb(0, 0, 0);
+  color: #F8DD00;
   align-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: bold;
   font-size: 40px;
 }
 
-h2 {
+h3 {
+  color: white;
   text-align: left;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
@@ -85,25 +87,26 @@ p {
 
 /* buttons */
 input[type=submit] {
-  background-color: white;
-  color: #002359;
+  background-color:  #454545;
+  color: #F8DD00;
   font-size: 25px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
   padding: 10px 10px;
   border-radius: 10px;
-  border: 2px solid  #002359;
+  border: 2px solid  #F8DD00;
   margin-top: 1rem;
 }
 
 input[type=submit]:hover {
-  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  border: 2px solid white;
-  background-color: #002359;
-  color: white;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  border: 2px solid #454545;
+  background-color: #F8DD00;
+  color: #454545;
 }
 
 input[type=radio] {
+  color: white;
   font: 25px;
   text-align: left;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
