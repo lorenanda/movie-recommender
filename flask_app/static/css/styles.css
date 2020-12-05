@@ -108,6 +108,13 @@ input[type=submit]:hover {
   color: #F8DD00;
 }
 
+input[type=radio] {
+  color: white;
+  font: 25px;
+  text-align: left;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 /* navigation bar */
 ul {
   list-style-type: none;
