@@ -5,8 +5,11 @@ import tmdbv3api
 from tmdbv3api import TMDb, Movie
 import config
 
-from ml_models import svd, nmf, nmf_recommand, ratings_pivot, user_rating, calculate_similarity_matrix, recomandations_similar_users, collaborative_filtering
-from user_input_promt import input_movies, movies_df
+from ml_models import svd, nmf, nmf_recommand, ratings_pivot, \
+    user_rating, calculate_similarity_matrix, \
+    recomandations_similar_users, collaborative_filtering, \
+    split_data, movies_df, svd_r_hat
+from user_input_promt import input_movies
 from get_TMDB_info import TMDBInfo
 
 tmdb = TMDb()
@@ -58,6 +61,9 @@ def recommender():
         input_frame = input_frame.append(
             agg, ignore_index=True)
 
+    preference_option = input_frame.iloc[-1]
+    selection = preference_option["rating"]
+
     input_frame = input_frame.merge(top10, on="label")[["movieId", "rating"]]
     input_frame["rating"] = input_frame["rating"].astype(int)
 
@@ -70,15 +76,16 @@ def recommender():
     input_frame = input_frame.to_dict()["rating"]
 
     # make recomandations to the user
+    cols_above, cols_below, cols_none = split_data(2010, movies=movies_df)
     if len_ratings > 7:
         rec = nmf_recommand(model=nmf, new_user=input_frame,
-                            n=5, orig_data=ratings_pivot)
+                            n=5, orig_data=ratings_pivot, cols_above=cols_above, cols_below=cols_below, selection=int(selection))
 
     else:
         sim_matrix = calculate_similarity_matrix(
             input_frame, df=user_rating.fillna(user_rating.mean().mean()), n_users=5)
         rec_for_sim_users = recomandations_similar_users(
-            sim_matrix, user_rating)
+            sim_matrix, svd_r_hat, cols_above, cols_below, selection=int(selection))
 
         rec = collaborative_filtering(
             rec_for_sim_users, 5, new_user_input=input_frame)
@@ -90,8 +97,6 @@ def recommender():
     # get information from TMDB
     rec_link = pd.merge(rec, link, on='movieId')
     rec_link["tmdbId"] = rec_link["tmdbId"].astype(int)
-
-    print(rec_link)
     movie_info = pd.DataFrame(columns=["title", "overview", "image_url", "popularity",
                                        "release_date", "video_url"])
     for i in rec_link["tmdbId"]:
