@@ -11,6 +11,7 @@ from collections import defaultdict
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import joblib
+import pickle
 
 from svd_train_model import user_rating
 from nmf import ratings_pivot
@@ -21,10 +22,39 @@ svd = joblib.load("svd_model.sav")
 nmf = joblib.load("nmf.sav")
 
 movies_df = pd.read_csv('./data/movies.csv')
-movies = movies_df['title']
+movies_df['year'] = 0
+for i, data in movies_df.iterrows():
+    #    print(data['title'])
+    #    print(int(data['title'].split('(')[-1].replace(')', '')))
+    try:
+        movies_df.loc[i, 'year'] = int(
+            data['title'].split('(')[-1].replace(')', ''))
+    except:
+        movies_df.loc[i, 'year'] = 0
+
+movies = movies_df[['title', 'year', 'movieId']]
+svd_r_hat = pd.read_pickle("R_hat.pkl")
+
+
+# split data in old and new movies based on a thershold
+def split_data(thrsh, movies):
+    """
+    split data in old and new movies based on a thershold
+    ####Parameters###:
+        -thrsh: year 
+        - movies : data frame containing movie Ids, year and title(title optional)
+    ####Returns####:
+        - 2 lists of Movie Ids: one with movie above the threshold, 
+            one with movies below the threshold
+    """
+    cols_above = [iid for iid in movies[movies["year"] >= thrsh]["movieId"]]
+    cols_below = [iid for iid in movies[movies["year"] < thrsh]["movieId"]]
+    cols_none = [iid for iid in movies[movies["year"] == 0]["movieId"]]
+
+    return cols_above, cols_below, cols_none
+
 
 # basline
-
 
 def get_recommendations():
     random.shuffle(movies)
@@ -65,7 +95,7 @@ def predict_new_user_input(algo, user_input, orig_data, user_id=None):
     return pred
 
 
-def recommand_n(predictions, n=10, rating=False):
+def recommand_n(predictions, n=10, rating=False, uid=0):
     """Recommand n best movies based on SVD algo from surpise
         # Parameters###:
 
@@ -79,8 +109,12 @@ def recommand_n(predictions, n=10, rating=False):
     """
     # First map the predictions to each user.
     top_n = defaultdict(list)
-    for uid, iid, true_r, est, _ in predictions:
-        top_n[uid].append((iid, est))
+    if uid == 0:
+        for uid, iid, true_r, est, _ in predictions:
+            top_n[uid].append((iid, est))
+    else:
+        for iid, est in predictions.items():
+            top_n[uid].append((iid, est))
 
         # Then sort the predictions for each user and retrieve the k highest ones.
     for uid, user_ratings in top_n.items():
@@ -108,7 +142,7 @@ def recommand_n(predictions, n=10, rating=False):
 # NMF
 
 
-def nmf_recommand(model, new_user, n, orig_data):
+def nmf_recommand(model, new_user, n, orig_data, cols_above, cols_below, selection=3):
     """
     Recomander system based on NMF.
     # Parametrs#####:
@@ -116,6 +150,8 @@ def nmf_recommand(model, new_user, n, orig_data):
         - new_user = user input (dict in from from movie Id and ratings)
         - n= number of recommandations (int)
         - orig_data = original data (must not contain NANs)
+        - selection: vals: 1-3 (1 -new movies, 2-old movies , 3 -indifrent)
+        - cols_above, cols_below= input from function split_data
 
     # Return#####:
         - data frame containing movie Id recomandations 
@@ -128,7 +164,19 @@ def nmf_recommand(model, new_user, n, orig_data):
     P_new_user = model.transform(new_user_input)
     user_pred = pd.DataFrame(np.dot(P_new_user, model.components_), columns=ratings_pivot.columns,
                              index=[new_user_input.index.unique()[0]])
-    user_pred.drop(columns=new_user.keys(), inplace=True)
+
+    list1 = list(new_user.keys())
+    if selection == 1:
+        cols_above = set(cols_above).intersection(set(orig_data.columns))
+        list_drop = list(set(list1) | set(cols_above))
+    elif selection == 2:
+        cols_below = set(cols_below).intersection(set(orig_data.columns))
+        list_drop = list(set(list1) | set(cols_below))
+    else:
+        list_drop = list1
+
+    user_pred.drop(columns=list_drop, inplace=True)
+
     user_pred.sort_values(
         by=userid, ascending=False, axis=1, inplace=True)
 
@@ -161,22 +209,28 @@ def calculate_similarity_matrix(new_user_input, df, n_users=5):
     return similar_users
 
 
-def recomandations_similar_users(similar_users, orig_data):
+def recomandations_similar_users(similar_users, orig_data, cols_above, cols_below, selection=3):
     """Makes recomandations for similar users based on SVD algo.
     # Parameters####:
         - similar_users: data frame containing user Id and similarity index
-        - orig_data: data frame containg other users and their ratings for specific movie
+        - orig_data: reconstrcuted data using SVD() (original ratings remain in place)
     # Returns###:
         - data frame containg movieId and their relative importance to the new user
-
     """
     final_recomand = pd.DataFrame(
         columns=["userId", "movieId", "rating", "rating_sim", "sim"])
     for usr, sim in zip(similar_users.index, similar_users.values):
-        user_input = orig_data.loc[usr].dropna().to_dict()
-        pred = predict_new_user_input(
-            algo=svd, user_input=user_input, orig_data=user_rating, user_id=usr)
-        recomand = recommand_n(pred, 10, True)
+        pred = orig_data.loc[usr]
+        pred = pd.DataFrame(pred).T
+        if selection == 1:
+            list_drop = set(cols_above).intersection(set(orig_data.columns))
+            pred.drop(columns=list_drop, inplace=True)
+        elif selection == 2:
+            list_drop = set(cols_below).intersection(set(orig_data.columns))
+            pred.drop(columns=list_drop, inplace=True)
+        pred = pred.T
+        pred = pred.squeeze()
+        recomand = recommand_n(pred.to_dict(), 10, True, uid=usr)
         recomand["rating_sim"] = recomand["rating"] * sim
         recomand["sim"] = sim
         final_recomand = final_recomand.append(recomand, ignore_index=True)
@@ -194,11 +248,12 @@ def collaborative_filtering(final_recomand, n, new_user_input):
     """
 
     final_recomand["rating_sim"] = final_recomand["rating_sim"].astype(float)
-    recomand = final_recomand.groupby(
+    recomand_sum = final_recomand.groupby(
         "movieId")[["rating_sim", "sim"]].sum().reset_index()
-    recomand["most_similar"] = recomand["rating_sim"] / recomand["sim"]
+    recomand_sum["most_similar"] = recomand_sum["rating_sim"] / \
+        recomand_sum["sim"]
 
-    user_recomand = recomand[~recomand["movieId"].isin(list(new_user_input.keys()))].sort_values(
+    user_recomand = recomand_sum[~recomand_sum["movieId"].isin(list(new_user_input.keys()))].sort_values(
         by="most_similar", ascending=False)["movieId"][:n]
     user_recomand = pd.DataFrame(
         pd.Series(user_recomand, name="movieId"), columns=["movieId"])
@@ -213,10 +268,15 @@ if __name__ == "__main__":
     pred = predict_new_user_input(
         algo=svd, user_input=new_user_input, orig_data=user_rating)
     print(recommand_n(pred, 5, False))
-    print(nmf_recommand(model=nmf, new_user=new_user_input,
-                        n=4, orig_data=ratings_pivot))
+    cols_above, cols_below, cols_none = split_data(2010, movies)
+
+    rec1 = nmf_recommand(model=nmf, new_user=new_user_input,
+                         n=4, orig_data=ratings_pivot, cols_above=cols_above, cols_below=cols_below, selection=2)
+    print(pd.merge(rec1, movies_df, on='movieId'))
     sim_matrix = calculate_similarity_matrix(
         new_user_input, df=user_rating.fillna(user_rating.mean().mean()), n_users=5)
-    rec_for_sim_users = recomandations_similar_users(sim_matrix, user_rating)
-    print(collaborative_filtering(
-        rec_for_sim_users, 5, new_user_input=new_user_input))
+    rec_for_sim_users = recomandations_similar_users(
+        sim_matrix, svd_r_hat, cols_above, cols_below, selection=2)
+    rec = collaborative_filtering(
+        rec_for_sim_users, 5, new_user_input=new_user_input)
+    print(pd.merge(rec, movies_df, on='movieId'))
