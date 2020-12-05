@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="static/css/styles.css" media="screen" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Movie Recommender System</title>
 </head>
 
@@ -16,7 +17,7 @@
         </ul> -->
 
         <h1>{{ title }}</h1>
-        <h3>Step 1: Here are some of the most popular movies of all times! Please rate as many as possible. If you haven't seen a movie, let the slider at 0.</h2>
+        <h2>Step 1: Here are some of the most popular movies of all times! Please rate as many as possible. If you haven't seen a movie, let the slider at 0.</h2>
 
         <form action="/recommender">
             <div class="wrapper">
@@ -100,8 +101,8 @@
                 </div>
             </div>
 
-            <div>
-                <h3>Step 2: What kind of movies do you prefer?</h2>
+            <div class="decades">
+                <h2>Step 2: What kind of movies do you prefer?</h2>
 
                 <input type="radio" id="old" name="preference" value="old">
                 <label for="old">Oldies but goldies!</label>
@@ -113,6 +114,12 @@
 
             <input type="submit" value="Recommend me new movies!" />
         </form>
+
+        <!-- Add font awesome icons to buttons (note that the fa-spin class rotates the icon) -->
+        <button class="buttonload">
+        <i class="fa fa-spinner fa-spin"></i>Loading
+        </button>
+
     </main>
 </body>
 
