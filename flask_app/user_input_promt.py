@@ -18,8 +18,8 @@ new = all_most_rated[all_most_rated["year"] > 2010]["movieId"].head(25)
 
 
 def input_movies():
-    old_choice = np.random.choice(old, 4, replace=False)
-    new_choice = np.random.choice(new, 6, replace=False)
+    old_choice = np.random.choice(old, 7, replace=False)
+    new_choice = np.random.choice(new, 8, replace=False)
     m1 = all_most_rated[all_most_rated["movieId"].isin(old_choice)]
     m2 = all_most_rated[all_most_rated["movieId"].isin(new_choice)]
     most_rated = m2.append(m1, ignore_index=True)
