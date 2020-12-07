@@ -9,7 +9,7 @@ from ml_models import svd, nmf, nmf_recommand, ratings_pivot, \
     user_rating, calculate_similarity_matrix, \
     recomandations_similar_users, collaborative_filtering, \
     split_data, movies_df, svd_r_hat
-from user_input_promt import input_movies
+from user_input_promt import input_movies, most_rated, old, new
 from get_TMDB_info import TMDBInfo
 
 tmdb = TMDb()
@@ -22,9 +22,23 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Display the most rated movies to the user
-       and promt user to rate them: solves cold start problem 
+       and promt user to rate them: solves cold start problem
     """
-    top10 = input_movies()
+    top10 = most_rated
+    input_id = pd.merge(top10, link, on='movieId')
+    input_id["tmdbId"] = input_id["tmdbId"].astype(int)
+    movie_info_input = pd.DataFrame(columns=["title", "overview", "image_url", "popularity",
+                                             "release_date", "video_url"])
+    for i in input_id["tmdbId"]:
+        t = TMDBInfo(movieId=i, api_key=tmdb.api_key, tmdb=TMDb())
+        overview, image_url, title, popularity, release_date = t.get_details()
+        t.get_movie_trailer()
+        video_url = t.get_video_url()
+
+        args = {"title": title, "overview": overview, "image_url": image_url, "popularity": popularity,
+                "release_date": release_date, "video_url": video_url}
+        movie_info_input = movie_info_input.append(args, ignore_index=True)
+        print(movie_info_input)
 
     return render_template(
         'main.html',
@@ -38,18 +52,20 @@ def index():
         movie6=top10['title'][6],
         movie7=top10['title'][7],
         movie8=top10['title'][8],
-        movie9=top10['title'][9]
+        movie9=top10['title'][9],
+        movie_info_input=movie_info_input
     )
 
 
 @app.route('/recommender')
 def recommender():
-    """Intercept user input and make recomandations based on his 
+    """Intercept user input and make recomandations based on his
         initial rating
     """
-    top10 = input_movies()
+    top10 = most_rated
     top10 = pd.DataFrame(top10.reset_index())
     top10["label"] = 'movie' + top10["index"].astype(str)
+    print(top10)
 
     # intercept user input
     user_input = dict(request.args)
@@ -77,15 +93,15 @@ def recommender():
 
     # make recomandations to the user
     cols_above, cols_below, cols_none = split_data(2010, movies=movies_df)
-    if len_ratings > 7:
+    if len_ratings > 5:
         rec = nmf_recommand(model=nmf, new_user=input_frame,
                             n=5, orig_data=ratings_pivot, cols_above=cols_above, cols_below=cols_below, selection=int(selection))
 
     else:
         sim_matrix = calculate_similarity_matrix(
-            input_frame, df=user_rating.fillna(user_rating.mean().mean()), n_users=5)
+            input_frame, df=user_rating.fillna(user_rating.mean().mean()), n_users=10)
         rec_for_sim_users = recomandations_similar_users(
-            sim_matrix, svd_r_hat, cols_above, cols_below, selection=int(selection))
+            sim_matrix, svd_r_hat, cols_above, cols_below, selection=2)
 
         rec = collaborative_filtering(
             rec_for_sim_users, 5, new_user_input=input_frame)
