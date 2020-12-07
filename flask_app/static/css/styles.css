@@ -55,6 +55,14 @@ main > * {
   display: grid;
 }
 
+.description #overview {
+  text-align: left;
+}
+
+.description #movietitle {
+  font-weight: bold;
+}
+
 .decades {
   align-content: initial;
   text-align: left;
