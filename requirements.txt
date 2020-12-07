@@ -1,0 +1,7 @@
+flask
+pandas
+joblib
+pickle
+tmdbv3api
+surprise
+sklearn
