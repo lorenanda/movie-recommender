@@ -2,7 +2,7 @@
 
 Project 9 for the Data Science Bootcamp at SPICED Academy Berlin, by Lorena Ciutacu and Daniela Morariu.
 
-<img src="https://github.com/lorenanda/movie-recommender/blob/main/demo.gif" width="500" height="300">
+<img src="https://github.com/lorenanda/movie-recommender/blob/main/demo.gif" width="700" height="350">
 
 ## Description
 The days of endless indecissive scrolling are over! We created a recommender system with a web interface that recommends you new movies based on your preferences. You only need to rate up to 15 movies and specify your preference for old vs. new movies, then you get a list of 5 movies along with their plot summary and trailer. We built this with:
