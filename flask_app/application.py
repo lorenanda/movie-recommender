@@ -53,6 +53,11 @@ def index():
         movie7=top10['title'][7],
         movie8=top10['title'][8],
         movie9=top10['title'][9],
+        movie10=top10['title'][10],
+        movie11=top10['title'][11],
+        movie12=top10['title'][12],
+        movie13=top10['title'][13],
+        movie14=top10['title'][14],
         movie_info_input=movie_info_input
     )
 
