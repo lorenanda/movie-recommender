@@ -1,4 +1,4 @@
-"""Train the SVD model. 
+"""Train the SVD model from sckit surpise. 
 Calculate the imputed user_rating matrix
 Use this in other recommandation systems
 """
@@ -9,9 +9,6 @@ from surprise import Dataset
 from surprise import Reader, dump
 from surprise import SVD
 from surprise import accuracy
-from surprise.model_selection import train_test_split, cross_validate
-from surprise.model_selection import KFold
-import joblib
 import pickle
 
 user_rating_matrix = pd.read_csv(
@@ -23,7 +20,8 @@ user_rating = R.pivot(index="userId", columns="movieId", values="rating")
 
 
 if '__name__' == '__main__':
-    """validatig the model """
+    """train the SV model from sckit predict and 
+        validate the model """
     # prepare the data for surpise
     reader = Reader(rating_scale=(0.5, 5))
 
