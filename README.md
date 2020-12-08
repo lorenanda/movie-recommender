@@ -16,9 +16,12 @@ In a terminal:
 1. Clone this repo: `git clone https://github.com/lorenanda/movie-recommender.git`
 2. Install the necessary libraries: `pip install -r requirements.txt`
 3. Change the directory to the main application `cd flask_app`
-4. Run three commands:
+4. Get your API key from [TMDB](https://developers.themoviedb.org/3/getting-started/introduction) and write it in `config.py`
+5. Run these three commands:
     - `export FLASK_APP=application.py`
     - `export FLASK_DEBUG=1`
     - `flask run`
-5. Open the listed localhost http://127.0.0.1:5000/ in a browser.
-6. Grab some popcorn, lean back, and enjoy a recommended movie!
+6. Open the listed localhost http://127.0.0.1:5000/ in a browser.
+7. Grab some popcorn, lean back, and enjoy a recommended movie!
+
+*The project was tested on Chrome and Firefox!*
