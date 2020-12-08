@@ -1,3 +1,12 @@
+"""Use TMDB APIs to get the following information from TMDB:
+- movie title
+- movie overview
+- movie popularity(avg rating)
+- movie release date
+- movie image
+- movie trailer URL
+
+"""
 import tmdbv3api
 from tmdbv3api import TMDb, Movie
 import config
@@ -22,6 +31,9 @@ class TMDBInfo:
         self.api_key = api_key
 
     def get_details(self):
+        """
+        get movie details from TMDB 
+        """
         movieId = self.movieId
         movie = Movie()
         print(movie)
@@ -33,6 +45,8 @@ class TMDBInfo:
         return m.overview, image_url, m.title, m.popularity, m.release_date
 
     def get_movie_trailer(self):
+        """Get movie trailer from TMDB
+        """
 
         url = "%s%s/%s?api_key=%s&language=%s" % (
             self.base,
@@ -56,6 +70,8 @@ class TMDBInfo:
         self.site = site
 
     def get_video_url(self):
+        """Create correct URL to embed the movie trailer in HTML code
+        """
         if len(self.site) > 0:
             movie_site = self.site[0]
             base_url = "https://www.youtube.com/embed/"
@@ -70,17 +86,3 @@ class TMDBInfo:
             return trailer_url
         else:
             return []
-
-
-if __name__ == "__main__":
-    t = TMDBInfo(movieId=14280, api_key=tmdb.api_key, tmdb=TMDb())
-    overview, image_url, title, popularity, release_date = t.get_details()
-    print(overview)
-    print(image_url)
-    print(title)
-    print(popularity)
-    print(release_date)
-
-    t.get_movie_trailer()
-    video_url = t.get_video_url()
-    print(video_url)
