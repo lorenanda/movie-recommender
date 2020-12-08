@@ -7,25 +7,23 @@ Comprises all ML_models for recomandation systems:
 
 import random
 import pandas as pd
-from collections import defaultdict
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 import joblib
 import pickle
+from collections import defaultdict
+from sklearn.metrics.pairwise import cosine_similarity
 
-from svd_train_model import user_rating
-from nmf import ratings_pivot
+from train_svd_model import user_rating
+from train_nmf_model import ratings_pivot
 
 # load the model from disk
 
-svd = joblib.load("svd_model.sav")
-nmf = joblib.load("nmf.sav")
+svd = joblib.load("./saved_models/svd_model.sav")
+nmf = joblib.load("./saved_models/nmf.sav")
 
 movies_df = pd.read_csv('./data/movies.csv')
 movies_df['year'] = 0
 for i, data in movies_df.iterrows():
-    #    print(data['title'])
-    #    print(int(data['title'].split('(')[-1].replace(')', '')))
     try:
         movies_df.loc[i, 'year'] = int(
             data['title'].split('(')[-1].replace(')', ''))
@@ -33,7 +31,9 @@ for i, data in movies_df.iterrows():
         movies_df.loc[i, 'year'] = 0
 
 movies = movies_df[['title', 'year', 'movieId']]
-svd_r_hat = pd.read_pickle("R_hat.pkl")
+
+# read in the svd reconstructed matrxi
+svd_r_hat = pd.read_pickle("./saved_models/R_hat.pkl")
 
 
 # split data in old and new movies based on a thershold
@@ -162,7 +162,7 @@ def nmf_recommand(model, new_user, n, orig_data, cols_above, cols_below, selecti
         new_user, index=[userid], columns=orig_data.columns)
     new_user_input.fillna(3, inplace=True)
     P_new_user = model.transform(new_user_input)
-    user_pred = pd.DataFrame(np.dot(P_new_user, model.components_), columns=ratings_pivot.columns,
+    user_pred = pd.DataFrame(np.dot(P_new_user, model.components_), columns=orig_data.columns,
                              index=[new_user_input.index.unique()[0]])
 
     list1 = list(new_user.keys())
@@ -185,12 +185,12 @@ def nmf_recommand(model, new_user, n, orig_data, cols_above, cols_below, selecti
 # collaborative filtering
 
 
-def calculate_similarity_matrix(new_user_input, df, n_users=5):
+def calculate_similarity_matrix(new_user_input, orig_data, n_users=5):
     """Calculates similarity matrix using cosine similarity.
         This is a user similarity matrix.
         # Parameters####:
             - new_user: new user profiele (dict)
-            - df : data frame containing other users and ratings(most not contain NANS)
+            - orig_data : data frame containing other users and ratings(most not contain NANS)
             - n_users: how many similar users should be picked (int)
 
         # Returns#####:
@@ -198,11 +198,11 @@ def calculate_similarity_matrix(new_user_input, df, n_users=5):
 
     """
     new_user = pd.DataFrame(new_user_input, index=[random.randint(1_000, 2_000)],
-                            columns=user_rating.columns)
-    new_user.fillna(user_rating.mean().mean(), inplace=True)
-    df = df.append(new_user, ignore_index=True)
-    sim_matrix = pd.DataFrame(cosine_similarity(df)).iloc[-1]
-    sim_matrix.index = list(range(1, len(df)+1))
+                            columns=orig_data.columns)
+    new_user.fillna(orig_data.mean().mean(), inplace=True)
+    orig_data = orig_data.append(new_user, ignore_index=True)
+    sim_matrix = pd.DataFrame(cosine_similarity(orig_data)).iloc[-1]
+    sim_matrix.index = list(range(1, len(orig_data)+1))
     sim_matrix.sort_values(ascending=False, inplace=True)
     similar_users = sim_matrix[1:(n_users+1)]
 
@@ -261,22 +261,3 @@ def collaborative_filtering(final_recomand, n, new_user_input):
     user_recomand["movieId"] = user_recomand["movieId"].astype(int)
 
     return user_recomand
-
-
-if __name__ == "__main__":
-    new_user_input = {1: 3, 50: 5}
-    pred = predict_new_user_input(
-        algo=svd, user_input=new_user_input, orig_data=user_rating)
-    print(recommand_n(pred, 5, False))
-    cols_above, cols_below, cols_none = split_data(2010, movies)
-
-    rec1 = nmf_recommand(model=nmf, new_user=new_user_input,
-                         n=4, orig_data=ratings_pivot, cols_above=cols_above, cols_below=cols_below, selection=2)
-    print(pd.merge(rec1, movies_df, on='movieId'))
-    sim_matrix = calculate_similarity_matrix(
-        new_user_input, df=user_rating.fillna(user_rating.mean().mean()), n_users=5)
-    rec_for_sim_users = recomandations_similar_users(
-        sim_matrix, svd_r_hat, cols_above, cols_below, selection=2)
-    rec = collaborative_filtering(
-        rec_for_sim_users, 5, new_user_input=new_user_input)
-    print(pd.merge(rec, movies_df, on='movieId'))
