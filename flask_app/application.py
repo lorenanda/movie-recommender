@@ -1,5 +1,7 @@
+""" Creates Falsk interface. 
+Reads in user input and makes recomandations basde on it.
+"""
 from flask import Flask, render_template, request
-import joblib
 import pandas as pd
 import tmdbv3api
 from tmdbv3api import TMDb, Movie
@@ -9,7 +11,7 @@ from ml_models import svd, nmf, nmf_recommand, ratings_pivot, \
     user_rating, calculate_similarity_matrix, \
     recomandations_similar_users, collaborative_filtering, \
     split_data, movies_df, svd_r_hat
-from user_input_promt import input_movies, most_rated, old, new
+from user_input_promt import most_rated
 from get_TMDB_info import TMDBInfo
 
 tmdb = TMDb()
@@ -29,6 +31,7 @@ def index():
     input_id["tmdbId"] = input_id["tmdbId"].astype(int)
     movie_info_input = pd.DataFrame(columns=["title", "overview", "image_url", "popularity",
                                              "release_date", "video_url"])
+    # Get info from TMDB
     for i in input_id["tmdbId"]:
         t = TMDBInfo(movieId=i, api_key=tmdb.api_key, tmdb=TMDb())
         overview, image_url, title, popularity, release_date = t.get_details()
@@ -38,7 +41,6 @@ def index():
         args = {"title": title, "overview": overview, "image_url": image_url, "popularity": popularity,
                 "release_date": release_date, "video_url": video_url}
         movie_info_input = movie_info_input.append(args, ignore_index=True)
-        print(movie_info_input)
 
     return render_template(
         'main.html',
@@ -70,7 +72,6 @@ def recommender():
     top10 = most_rated
     top10 = pd.DataFrame(top10.reset_index())
     top10["label"] = 'movie' + top10["index"].astype(str)
-    print(top10)
 
     # intercept user input
     user_input = dict(request.args)
@@ -82,6 +83,7 @@ def recommender():
         input_frame = input_frame.append(
             agg, ignore_index=True)
 
+    # intercept users preference for old or new movies
     preference_option = input_frame.iloc[-1]
     selection = preference_option["rating"]
 
@@ -97,19 +99,20 @@ def recommender():
     input_frame = input_frame.to_dict()["rating"]
 
     # make recomandations to the user
-    cols_above, cols_below, cols_none = split_data(2010, movies=movies_df)
+    cols_above, cols_below, _ = split_data(2010, movies=movies_df)
     if len_ratings > 5:
         rec = nmf_recommand(model=nmf, new_user=input_frame,
                             n=5, orig_data=ratings_pivot, cols_above=cols_above, cols_below=cols_below, selection=int(selection))
 
     else:
         sim_matrix = calculate_similarity_matrix(
-            input_frame, df=user_rating.fillna(user_rating.mean().mean()), n_users=10)
+            input_frame, orig_data=user_rating.fillna(user_rating.mean().mean()), n_users=3)
         rec_for_sim_users = recomandations_similar_users(
-            sim_matrix, svd_r_hat, cols_above, cols_below, selection=2)
+            sim_matrix, orig_data=svd_r_hat, cols_above=cols_above,
+            cols_below=cols_below, selection=int(selection))
 
         rec = collaborative_filtering(
-            rec_for_sim_users, 5, new_user_input=input_frame)
+            rec_for_sim_users, n=5, new_user_input=input_frame)
 
     # display only the titles
     rec = pd.merge(rec, movies_df, on='movieId')
