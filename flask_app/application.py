@@ -7,16 +7,18 @@ import tmdbv3api
 from tmdbv3api import TMDb, Movie
 import config
 
-from ml_models import svd, nmf, nmf_recommand, ratings_pivot, \
+from reading_in_data import ratings_pivot, movies_df, link
+
+from ml_models import svd, nmf, nmf_recommand,  \
     calculate_similarity_matrix, \
     recomandations_similar_users, collaborative_filtering, \
-    split_data, movies_df, svd_r_hat
+    split_data, svd_r_hat
 from user_input_promt import most_rated
 from get_TMDB_info import TMDBInfo
 
 tmdb = TMDb()
 tmdb.api_key = config.API_KEY
-link = pd.read_csv("./data/links.csv")
+
 
 app = Flask(__name__)
 
