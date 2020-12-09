@@ -1,7 +1,7 @@
 """
 This is a helper function that renders the most popular movie and then
-displayes to the user those movies with the highest standard deviation of the rating.
-It solves the cold start problem
+displays to the user those movies with the highest standard deviation of the rating.
+It solves the cold start problem.
 """
 import random
 import numpy as np
@@ -18,15 +18,15 @@ user_rating_matrix["sum_rating"] = user_rating_matrix.groupby("movieId")[
 user_rating_matrix["std_rating"] = user_rating_matrix.groupby(
     "movieId")["rating"].transform("std")
 
-# removes duplicated crated by the transform function
+# removes duplicates created by the transform function
 sorted_matrix = user_rating_matrix.groupby(
     "movieId")["std_rating", "sum_rating"].mean().sort_values(by='sum_rating', ascending=False)
 
 
-# merges data frame with movies data frame containg titles
+# merges data frame with movies data frame containing titles
 movies_with_title = pd.merge(sorted_matrix, movies, on='movieId')
 
-# catalogs movies into old and new category, then selects those with highest standard dev
+# categorizes movies into old and new category, then selects those with highest standard dev
 old = movies_with_title[movies_with_title["year"] <= 2010].head(25)
 new = movies_with_title[movies_with_title["year"] > 2010].head(25)
 old.sort_values(by="std_rating", ascending=False, inplace=True)
@@ -40,11 +40,11 @@ def input_movies(old=old, new=new, movies_with_title=movies_with_title):
     Returns a data frame with 15 movie titles and their movieId link
     ##Parameters##:
     old - MovieId of old movies 
-    new- MovieIds of new movies
-    movies_with_tile - data frame containg user ratings, movieId and title of the movies
+    new - MovieIds of new movies
+    movies_with_tile - data frame containing user ratings, movieId and title of the movies
 
     ##Returns##:
-    Data frame of 15 movies containg MovieId and title
+    Data frame of 15 movies containing MovieId and title
 
     """
 

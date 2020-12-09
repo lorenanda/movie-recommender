@@ -1,6 +1,6 @@
 """
 Train the NMF model from sklearn.
-Save the model and use it in Falsk application.
+Save the model and use it in the Flask application.
 
 """
 

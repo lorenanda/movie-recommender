@@ -1,7 +1,7 @@
 """Use TMDB APIs to get the following information from TMDB:
 - movie title
 - movie overview
-- movie popularity(avg rating)
+- movie popularity (avg rating)
 - movie release date
 - movie image
 - movie trailer URL
@@ -31,8 +31,7 @@ class TMDBInfo:
         self.api_key = api_key
 
     def get_details(self):
-        """
-        get movie details from TMDB 
+        """Get movie details from TMDB 
         """
         movieId = self.movieId
         movie = Movie()

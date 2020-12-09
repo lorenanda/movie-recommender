@@ -1,5 +1,5 @@
 """
-Comprises all ML_models for recomandation systems:
+Comprises all ML_models for recommendation systems:
 - SVD from surpise
 - NMF from sklearn
 - combination of collaborative filtering with SVD
@@ -32,17 +32,17 @@ for i, data in movies_df.iterrows():
 
 movies = movies_df[['title', 'year', 'movieId']]
 
-# read in the svd reconstructed matrxi
+# read in the svd reconstructed matrix
 svd_r_hat = pd.read_pickle("./saved_models/R_hat.pkl")
 
 
-# split data in old and new movies based on a thershold
+# split data in old and new movies based on a threshold
 def split_data(thrsh, movies):
     """
-    split data in old and new movies based on a thershold
+    Splits data in old and new movies based on a threshold
     ####Parameters###:
-        -thrsh: year 
-        - movies : data frame containing movie Ids, year and title(title optional)
+        - thrsh: year 
+        - movies: data frame containing movie Ids, year and title (title optional)
     ####Returns####:
         - 2 lists of Movie Ids: one with movie above the threshold, 
             one with movies below the threshold
@@ -54,7 +54,7 @@ def split_data(thrsh, movies):
     return cols_above, cols_below, cols_none
 
 
-# basline
+# baseline
 
 def get_recommendations():
     random.shuffle(movies)
@@ -64,15 +64,15 @@ def get_recommendations():
 
 
 def predict_new_user_input(algo, user_input, orig_data, user_id=None):
-    """we  need to predict user ratings based on SVD in order to make recommandations:
+    """We  need to predict user ratings based on SVD in order to make recommendations:
      # Parameters#####:
-       - algo= SVD algo (other surpise algos)
-       - user_input= users initial ratings
+       - algo = SVD algo (other surpise algos)
+       - user_input = users initial ratings
        - orig_data = original training data, user-rating matrix (NANs are allowed)
        - user_id = default False, if True a specific user id is provided
                  True to be used only when predicting based on collaborative filtering
       ######Returns#####
-      - prediction dictionary for all movie in the trainin set
+      - prediction dictionary for all movie in the training set
     """
     if not user_id:
         new_user = pd.DataFrame(user_input, index=[random.randint(
@@ -96,15 +96,15 @@ def predict_new_user_input(algo, user_input, orig_data, user_id=None):
 
 
 def recommand_n(predictions, n=10, rating=False, uid=0):
-    """Recommand n best movies based on SVD algo from surpise
+    """Recommends n best movies based on SVD algo from surpise
         # Parameters###:
 
-           -predictions= given by function predict_new_user_input (dictionary)
-           -n= number of items to recommand (int)
-           -rating = default False, if True also the ratings of the movie will be outputed
+           -predictions = given by function predict_new_user_input (dictionary)
+           -n = number of items to recommend (int)
+           -rating = default False, if True also the ratings of the movie will be outputted
 
         # Returns#####:
-            -data frame containing user Id, n recommanded movies and the ratings (if rating is True)
+            -data frame containing user Id, n recommended movies and the ratings (if rating is True)
 
     """
     # First map the predictions to each user.
@@ -144,17 +144,17 @@ def recommand_n(predictions, n=10, rating=False, uid=0):
 
 def nmf_recommand(model, new_user, n, orig_data, cols_above, cols_below, selection=3):
     """
-    Recomander system based on NMF.
-    # Parametrs#####:
-        -model = NMF ML_models
-        - new_user = user input (dict in from from movie Id and ratings)
-        - n= number of recommandations (int)
+    Recommender system based on NMF.
+    # Parameters#####:
+        - model = NMF ML_models
+        - new_user = user input (dict in from movie Id and ratings)
+        - n = number of recommendations (int)
         - orig_data = original data (must not contain NANs)
-        - selection: vals: 1-3 (1 -new movies, 2-old movies , 3 -indifrent)
-        - cols_above, cols_below= input from function split_data
+        - selection = vals: 1-3 (1-new movies, 2-old movies , 3-indifferent)
+        - cols_above, cols_below = input from function split_data
 
     # Return#####:
-        - data frame containing movie Id recomandations 
+        - data frame containing movie Id recommendations 
 
     """
     userid = random.randint(1, 610)
@@ -189,9 +189,9 @@ def calculate_similarity_matrix(new_user_input, orig_data, n_users=5):
     """Calculates similarity matrix using cosine similarity.
         This is a user similarity matrix.
         # Parameters####:
-            - new_user: new user profiele (dict)
-            - orig_data : data frame containing other users and ratings(must not contain NANS)
-            - n_users: how many similar users should be picked (int)
+            - new_user = new user profile (dict)
+            - orig_data = data frame containing other users and ratings (must not contain NANS)
+            - n_users = how many similar users should be picked (int)
 
         # Returns#####:
             - data frame containing similar users (ids) and their similarity index
@@ -210,12 +210,12 @@ def calculate_similarity_matrix(new_user_input, orig_data, n_users=5):
 
 
 def recomandations_similar_users(similar_users, orig_data, cols_above, cols_below, selection=3):
-    """Makes recomandations for similar users based on SVD algo.
+    """Makes recommendations for similar users based on SVD algo.
     # Parameters####:
-        - similar_users: data frame containing user Id and similarity index
-        - orig_data: reconstrcuted data using SVD() (original ratings remain in place)
+        - similar_users = data frame containing user Id and similarity index
+        - orig_data = reconstructed data using SVD() (original ratings remain in place)
     # Returns###:
-        - data frame containg movieId and their relative importance to the new user
+        - data frame containing movieId and their relative importance to the new user
     """
     final_recomand = pd.DataFrame(
         columns=["userId", "movieId", "rating", "rating_sim", "sim"])
@@ -239,12 +239,12 @@ def recomandations_similar_users(similar_users, orig_data, cols_above, cols_belo
 
 
 def collaborative_filtering(final_recomand, n, new_user_input):
-    """Selects the most relevant movies for a new user, basde on his similarity with other users.
+    """Selects the most relevant movies for a new user, based on their similarity with other users.
     # Parameters###:
-        - final_recomand: output of function recomandations_similar_users
-        - n: number of movies to be recomanded
+        - final_recomand = output of function recomandations_similar_users
+        - n = number of movies to be recommended
     # Returns###:
-        - pandas data frame containing top movie recomandation (iids) for new user
+        - pandas data frame containing top movie recommendation (iids) for new user
     """
 
     final_recomand["rating_sim"] = final_recomand["rating_sim"].astype(float)
