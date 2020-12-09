@@ -8,7 +8,7 @@ from tmdbv3api import TMDb, Movie
 import config
 
 from ml_models import svd, nmf, nmf_recommand, ratings_pivot, \
-    user_rating, calculate_similarity_matrix, \
+    calculate_similarity_matrix, \
     recomandations_similar_users, collaborative_filtering, \
     split_data, movies_df, svd_r_hat
 from user_input_promt import most_rated
@@ -106,7 +106,7 @@ def recommender():
 
     else:
         sim_matrix = calculate_similarity_matrix(
-            input_frame, orig_data=user_rating.fillna(user_rating.mean().mean()), n_users=3)
+            input_frame, orig_data=ratings_pivot, n_users=3)
         rec_for_sim_users = recomandations_similar_users(
             sim_matrix, orig_data=svd_r_hat, cols_above=cols_above,
             cols_below=cols_below, selection=int(selection))
