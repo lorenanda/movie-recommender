@@ -1,12 +1,4 @@
-/* COLOR PALETTE
-#000000
-#00c9c8
-#bffcf9
-#47817f
-*/
-
 body {
-  /*background-image: radial-gradient(circle, #f4f4f9, #dde5f5, #bdd8f0, #96cde6, #69c2d6, #51b1c6, #34a0b7, #008fa8, #007499, #005888, #003d72, #002359);*/
   background-image: radial-gradient(circle, #b5c2c2, #a1abad, #8e9498, #7c7e81, #69696b, #5d5d5e, #515151, #454545, #3d3d3d, #363636, #2e2e2e, #272727);
   display: flex;
   justify-content: center;
