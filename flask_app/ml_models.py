@@ -190,7 +190,7 @@ def calculate_similarity_matrix(new_user_input, orig_data, n_users=5):
         This is a user similarity matrix.
         # Parameters####:
             - new_user: new user profiele (dict)
-            - orig_data : data frame containing other users and ratings(most not contain NANS)
+            - orig_data : data frame containing other users and ratings(must not contain NANS)
             - n_users: how many similar users should be picked (int)
 
         # Returns#####:
