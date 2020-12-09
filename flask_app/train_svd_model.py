@@ -11,16 +11,13 @@ from surprise import SVD
 from surprise import accuracy
 import pickle
 
-user_rating_matrix = pd.read_csv(
-    "./data/ratings.csv", parse_dates=True)
+from reading_in_data import user_rating_matrix, user_rating
 
 
 R = user_rating_matrix[["userId", "movieId", "rating"]]
-user_rating = R.pivot(index="userId", columns="movieId", values="rating")
-
 
 if '__name__' == '__main__':
-    """train the SV model from sckit predict and 
+    """train the SV model from sckit predict and
         validate the model """
     # prepare the data for surpise
     reader = Reader(rating_scale=(0.5, 5))

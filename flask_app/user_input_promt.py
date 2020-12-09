@@ -7,8 +7,7 @@ import random
 import numpy as np
 import pandas as pd
 
-from train_svd_model import user_rating_matrix
-from ml_models import movies
+from reading_in_data import user_rating_matrix, movies
 
 
 # data preparation

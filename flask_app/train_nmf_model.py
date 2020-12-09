@@ -11,11 +11,7 @@ from sklearn.decomposition import NMF
 import joblib
 import random
 
-movies = pd.read_csv('./data/movies.csv')
-ratings = pd.read_csv('./data/ratings.csv')
-ratings_pivot = ratings.pivot(
-    index='userId', columns='movieId', values='rating')
-ratings_pivot.replace(np.nan, 0, inplace=True)
+from reading_in_data import movies_df, user_rating, ratings_pivot
 
 
 if __name__ == "__main__":
