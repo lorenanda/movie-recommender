@@ -9,12 +9,7 @@
 """
 import tmdbv3api
 from tmdbv3api import TMDb, Movie
-import config
 import requests
-
-
-tmdb = TMDb()
-tmdb.api_key = config.API_KEY
 
 
 class TMDBInfo:

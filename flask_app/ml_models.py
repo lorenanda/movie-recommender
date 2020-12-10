@@ -15,19 +15,6 @@ import pickle
 from collections import defaultdict
 from sklearn.metrics.pairwise import cosine_similarity
 
-from reading_in_data import user_rating, movies_df, movies, ratings_pivot
-
-
-# load the model from disk
-
-svd = joblib.load("./saved_models/svd_model.sav")
-nmf = joblib.load("./saved_models/nmf.sav")
-
-# read in the svd reconstructed matrxi
-svd_r_hat = pd.read_pickle("./saved_models/R_hat.pkl")
-
-
-# split data in old and new movies based on a thershold
 
 def split_data(thrsh, movies):
     """
@@ -48,7 +35,7 @@ def split_data(thrsh, movies):
 
 # basline
 
-def get_recommendations():
+def get_recommendations(movies):
     random.shuffle(movies)
     return movies[:3]
 

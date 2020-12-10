@@ -3,7 +3,7 @@ import numpy as np
 import sqlalchemy
 from sqlalchemy import create_engine
 
-import config2
+import flask_app.config2 as config2
 
 # establishing SQL connection
 engine = create_engine(
@@ -55,7 +55,7 @@ for i, data in movies_df.iterrows():
 
 movies = movies_df[['title', 'year', 'movieId']]
 
-# read in the link data
+# read in the link data for IMDB and TMDB
 select_link = """
     SELECT * FROM link;
     """
