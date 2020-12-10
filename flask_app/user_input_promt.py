@@ -7,7 +7,7 @@ import random
 import numpy as np
 import pandas as pd
 
-from reading_in_data import user_rating_matrix, movies
+from flask_app.reading_in_data import user_rating_matrix, movies
 
 
 # data preparation
@@ -19,7 +19,7 @@ user_rating_matrix["std_rating"] = user_rating_matrix.groupby(
 
 # removes duplicated crated by the transform function
 sorted_matrix = user_rating_matrix.groupby(
-    "movieId")["std_rating", "sum_rating"].mean().sort_values(by='sum_rating', ascending=False)
+    ["movieId"])["std_rating", "sum_rating"].mean().sort_values(by='sum_rating', ascending=False)
 
 
 # merges data frame with movies data frame containg titles
