@@ -1,7 +1,12 @@
 import pytest
 import numpy as np
-import ml_models
-from ml_models import ratings_pivot, nmf, movies_df, split_data
+import joblib
+import flask_app
+from flask_app import split_data, ratings_pivot, movies_df
+from flask_app import ml_models
+
+
+nmf = joblib.load("./flask_app/saved_models/nmf.sav")
 
 
 @pytest.mark.parametrize(['input', 'expected_output'],
