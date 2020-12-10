@@ -1,5 +1,5 @@
-""" Creates Falsk interface. 
-Reads in user input and makes recomandations basde on it.
+""" Creates Flask interface. 
+Reads in user input and makes recommendations based on it.
 """
 from flask import Flask, render_template, request
 import pandas as pd
@@ -32,7 +32,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """Display the most rated movies to the user
-       and promt user to rate them: solves cold start problem
+       and prompts the user to rate them: solves cold start problem.
     """
     top10 = most_rated
     input_id = pd.merge(top10, link, on='movieId')
@@ -74,8 +74,8 @@ def index():
 
 @app.route('/recommender')
 def recommender():
-    """Intercept user input and make recomandations based on his
-        initial rating
+    """Intercepts user input and makes recommendations
+    based on their initial rating.
     """
     top10 = most_rated
     top10 = pd.DataFrame(top10.reset_index())

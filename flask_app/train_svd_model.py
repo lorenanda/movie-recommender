@@ -1,6 +1,6 @@
-"""Train the SVD model from sckit surpise. 
+"""Train the SVD model from scikit surpise. 
 Calculate the imputed user_rating matrix
-Use this in other recommandation systems
+Use this in other recommendation systems
 """
 import random
 import pandas as pd
@@ -17,8 +17,9 @@ from reading_in_data import user_rating_matrix, user_rating
 R = user_rating_matrix[["userId", "movieId", "rating"]]
 
 if '__name__' == '__main__':
-    """train the SV model from sckit predict and
-        validate the model """
+    """train the SV model from scikit predict 
+        and validate the model """
+
     # prepare the data for surpise
     reader = Reader(rating_scale=(0.5, 5))
 
