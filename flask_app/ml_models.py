@@ -8,35 +8,13 @@ Comprises all ML_models for recommendation systems:
 import random
 import pandas as pd
 import numpy as np
+import sqlalchemy
+from sqlalchemy import create_engine
 import joblib
 import pickle
 from collections import defaultdict
 from sklearn.metrics.pairwise import cosine_similarity
 
-from train_svd_model import user_rating
-from train_nmf_model import ratings_pivot
-
-# load the model from disk
-
-svd = joblib.load("./saved_models/svd_model.sav")
-nmf = joblib.load("./saved_models/nmf.sav")
-
-movies_df = pd.read_csv('./data/movies.csv')
-movies_df['year'] = 0
-for i, data in movies_df.iterrows():
-    try:
-        movies_df.loc[i, 'year'] = int(
-            data['title'].split('(')[-1].replace(')', ''))
-    except:
-        movies_df.loc[i, 'year'] = 0
-
-movies = movies_df[['title', 'year', 'movieId']]
-
-# read in the svd reconstructed matrix
-svd_r_hat = pd.read_pickle("./saved_models/R_hat.pkl")
-
-
-# split data in old and new movies based on a threshold
 def split_data(thrsh, movies):
     """
     Splits data in old and new movies based on a threshold
@@ -56,7 +34,7 @@ def split_data(thrsh, movies):
 
 # baseline
 
-def get_recommendations():
+def get_recommendations(movies):
     random.shuffle(movies)
     return movies[:3]
 

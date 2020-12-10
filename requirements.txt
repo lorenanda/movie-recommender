@@ -5,3 +5,5 @@ pickle5
 tmdbv3api==1.7.1
 scikit-surprise==1.1.1
 sklearn
+SQLAlchemy
+psycopg2-binary

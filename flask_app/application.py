@@ -5,18 +5,26 @@ from flask import Flask, render_template, request
 import pandas as pd
 import tmdbv3api
 from tmdbv3api import TMDb, Movie
-import config
+import joblib
 
-from ml_models import svd, nmf, nmf_recommand, ratings_pivot, \
+import flask_app.config as config
+from flask_app.reading_in_data import ratings_pivot, movies_df, link
+from flask_app.ml_models import nmf_recommand,  \
     calculate_similarity_matrix, \
     recomandations_similar_users, collaborative_filtering, \
-    split_data, movies_df, svd_r_hat
-from user_input_promt import most_rated
-from get_TMDB_info import TMDBInfo
+    split_data
+from flask_app.user_input_promt import most_rated
+from flask_app.get_TMDB_info import TMDBInfo
 
 tmdb = TMDb()
 tmdb.api_key = config.API_KEY
-link = pd.read_csv("./data/links.csv")
+
+
+svd = joblib.load("./flask_app/saved_models/svd_model.sav")
+nmf = joblib.load("./flask_app/saved_models/nmf.sav")
+# read in the svd reconstructed matrxi
+svd_r_hat = pd.read_pickle("./flask_app/saved_models/R_hat.pkl")
+
 
 app = Flask(__name__)
 
